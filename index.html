@@ -20,6 +20,9 @@
   <script src='app/js/app.js' type='text/javascript'></script>
 
 </head>
-<body ng-app='app' class='container'>
+<body ng-app='app' ng-controller='MessagesCtrl' class='container'>
+  <ul ng-repeat='(id, message) in messages'>
+    <li>{{message}}</li>
+  </ul>
 </body>
 </html>
