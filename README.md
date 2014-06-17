@@ -13,3 +13,7 @@ Yet another chat...
 ## Status of the app
 
 Just initialized
+
+## Run the server
+
+    python -m SimpleHTTPServer
