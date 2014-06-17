@@ -6,7 +6,7 @@ controllers.MessagesCtrl = function($scope, Resource) {
 controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
   var resetNewMessage = function() {
     $scope.newMessage = {
-      text: '',
+      text:       '',
       senderName: Authentication.getCurrentUser().name
     };
   };
@@ -21,10 +21,13 @@ var services = {}; ////////////////////////////////////////////////////////////
 services.Resource = function($firebase) {
   var firebaseUrl = 'https://yetanotherchat.firebaseio.com/development/';
   return {
-    messages: $firebase(new Firebase(firebaseUrl + 'messages'))
+    firebaseRef: new Firebase(firebaseUrl),
+    messages:    $firebase(new Firebase(firebaseUrl + 'messages'))
   };
 };
-services.Authentication = function() {
+services.Authentication = function(Resource, $firebaseSimpleLogin) {
+  var auth = $firebaseSimpleLogin(Resource.firebaseRef);
+debugger;
   return {
     getCurrentUser: function() { return { name: 'erik' }; }
   };
