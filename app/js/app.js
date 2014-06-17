@@ -1,15 +1,19 @@
 'use strict';
 var controllers = {}; /////////////////////////////////////////////////////////
 controllers.MessagesCtrl = function($scope, Resource) {
-  var initialize = function () {
-    $scope.messages = Resource.messages;
+  $scope.messages = Resource.messages;
+};
+controllers.NewMessageCtrl = function($scope, Resource) {
+  var resetNewMessage = function() { $scope.newMessage = { text: '', senderName: "erik" }; };
+  resetNewMessage();
+  $scope.create = function() {
+    Resource.messages.$add($scope.newMessage);
+    resetNewMessage();
   };
-  initialize();
-  debugger;
 };
 var services = {}; ////////////////////////////////////////////////////////////
 services.Resource = function ($firebase) {
-  var firebaseUrl = 'https://yac.firebaseio.com/development/';
+  var firebaseUrl = 'https://yetanotherchat.firebaseio.com/development/';
   return {
     messages: $firebase(new Firebase(firebaseUrl + 'messages'))
   };
