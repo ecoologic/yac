@@ -3,23 +3,34 @@ var controllers = {}; /////////////////////////////////////////////////////////
 controllers.MessagesCtrl = function($scope, Resource) {
   $scope.messages = Resource.messages;
 };
-controllers.NewMessageCtrl = function($scope, Resource) {
-  var resetNewMessage = function() { $scope.newMessage = { text: '', senderName: "erik" }; };
+controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
+  var resetNewMessage = function() {
+    $scope.newMessage = {
+      text: '',
+      senderName: Authentication.getCurrentUser().name
+    };
+  };
   resetNewMessage();
+
   $scope.create = function() {
     Resource.messages.$add($scope.newMessage);
     resetNewMessage();
   };
 };
 var services = {}; ////////////////////////////////////////////////////////////
-services.Resource = function ($firebase) {
+services.Resource = function($firebase) {
   var firebaseUrl = 'https://yetanotherchat.firebaseio.com/development/';
   return {
     messages: $firebase(new Firebase(firebaseUrl + 'messages'))
   };
 };
+services.Authentication = function() {
+  return {
+    getCurrentUser: function() { return { name: 'erik' }; }
+  };
+};
 var filters = {}; /////////////////////////////////////////////////////////////
-var run = function ($rootScope, $log) {
+var run = function($rootScope, $log) {
   $rootScope.$log = $log;
 };
 var dependencies = [ //////////////////////////////////////////////////////////
