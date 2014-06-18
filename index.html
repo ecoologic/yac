@@ -22,7 +22,12 @@
 
 </head>
 <body ng-app='app' class='container'>
-  <section ng-controller='MessagesCtrl'>
+  <section ng-controller='SessionCtrl' class='session'>
+    <span ng-show='isLoggedIn'>Your are logged in as {{currentUser.username}}</span>
+    <span ng-show='!isLoggedIn'>Your are not logged in</span>
+    <button ng-click='create()'>
+  </section>
+  <section ng-controller='MessagesCtrl' class='messages'>
     <ul ng-repeat='(id, message) in messages'>
       <li>
         <span>{{message.senderName}}:</span>
@@ -30,7 +35,7 @@
       </li>
     </ul>
   </section>
-  <section ng-controller='NewMessageCtrl'>
+  <section ng-controller='NewMessageCtrl' class='new-message'>
     <form name='newMessageForm' ng-submit='create()'>
       <input name='newMessageText' ng-model='newMessage.text'
              autofocus required minlength='1' placeholder="I'm thinking that..."/>

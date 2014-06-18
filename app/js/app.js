@@ -7,7 +7,7 @@ controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
   var resetNewMessage = function() {
     $scope.newMessage = {
       text:       '',
-      senderName: Authentication.getCurrentUser().name
+      senderName: 'erik' // Authentication.getCurrentUser().username
     };
   };
   resetNewMessage();
@@ -17,19 +17,34 @@ controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
     resetNewMessage();
   };
 };
+controllers.SessionCtrl = function($scope, Authentication) {
+  $scope.create = function() {
+    Authentication.login().then(function(user) {
+      console.log('SessionCtrl#create - login - then', user);
+      $scope.currentUser = user;
+      $scope.isLoggedIn = !!$scope.currentUser;
+    });
+  };
+};
 var services = {}; ////////////////////////////////////////////////////////////
+// https://www.firebase.com/docs/security/simple-login-facebook.html
+services.Authentication = function(Resource, $firebaseSimpleLogin) {
+  var currentUser, errors;
+  var auth = $firebaseSimpleLogin(Resource.firebaseRef, function(errors, user) {
+    console.log('Authentication - $firebaseSimpleLogin', errors, user);
+    errors      = errors;
+    currentUser = user;
+  });
+  return {
+    login:          function() { return auth.$login('github'); },
+    getCurrentUser: function() { return currentUser; }
+  };
+};
 services.Resource = function($firebase) {
   var firebaseUrl = 'https://yetanotherchat.firebaseio.com/development/';
   return {
     firebaseRef: new Firebase(firebaseUrl),
     messages:    $firebase(new Firebase(firebaseUrl + 'messages'))
-  };
-};
-services.Authentication = function(Resource, $firebaseSimpleLogin) {
-  var auth = $firebaseSimpleLogin(Resource.firebaseRef);
-debugger;
-  return {
-    getCurrentUser: function() { return { name: 'erik' }; }
   };
 };
 var filters = {}; /////////////////////////////////////////////////////////////

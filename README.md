@@ -16,4 +16,4 @@ Just initialized
 
 ## Run the server
 
-    python -m SimpleHTTPServer
+    python -m SimpleHTTPServer # => localhost:8000
