@@ -17,11 +17,14 @@ controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
     resetNewMessage();
   };
 };
-controllers.AuthenticationCtrl = function($scope, Authentication) {
+controllers.AuthenticationCtrl = function($scope, Authentication, Resource) {
   $scope.create = function() {
     Authentication.login().then(function(user) {
       console.log('AuthenticationCtrl#create - login - then', user);
-      $scope.currentUser = user;
+      var currentUser = { username: user.username };
+      Resource.users[user.username] = currentUser;
+      Resource.users.$save(user.username);
+      $scope.currentUser = currentUser;
       $scope.isLoggedIn = !!$scope.currentUser;
     });
   };
@@ -43,7 +46,8 @@ services.Resource = function($firebase) {
   var firebaseUrl = 'https://yetanotherchat.firebaseio.com/development/';
   return {
     firebaseRef: new Firebase(firebaseUrl),
-    messages:    $firebase(new Firebase(firebaseUrl + 'messages'))
+    messages:    $firebase(new Firebase(firebaseUrl + 'messages')),
+    users:       $firebase(new Firebase(firebaseUrl + 'users')),
   };
 };
 var filters = {}; /////////////////////////////////////////////////////////////
