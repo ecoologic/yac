@@ -17,17 +17,16 @@ controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
     resetNewMessage();
   };
 };
-controllers.SessionCtrl = function($scope, Authentication) {
+controllers.AuthenticationCtrl = function($scope, Authentication) {
   $scope.create = function() {
     Authentication.login().then(function(user) {
-      console.log('SessionCtrl#create - login - then', user);
+      console.log('AuthenticationCtrl#create - login - then', user);
       $scope.currentUser = user;
       $scope.isLoggedIn = !!$scope.currentUser;
     });
   };
 };
 var services = {}; ////////////////////////////////////////////////////////////
-// https://www.firebase.com/docs/security/simple-login-facebook.html
 services.Authentication = function(Resource, $firebaseSimpleLogin) {
   var currentUser, errors;
   var auth = $firebaseSimpleLogin(Resource.firebaseRef, function(errors, user) {
@@ -52,11 +51,20 @@ var run = function($rootScope, $log) {
   $rootScope.$log = $log;
 };
 var dependencies = [ //////////////////////////////////////////////////////////
-  'firebase'         // https://www.firebase.com/docs/angular/reference.html
+  'firebase'        // https://www.firebase.com/docs/angular/reference.html
                      // https://www.firebase.com/docs/queries.html
                      // https://www.firebase.com/docs/data-structure.html
+  // 'ui.router'        // https://github.com/angular-ui/ui-router
 ];
+// var config = function($stateProvider, $urlRouterProvider) { ///////////////////
+//   $stateProvider
+//     .state('authentication', {
+//       url:         '/authentication',
+//       templateUrl: 'partials/authentication/new.html'
+//     });
+// };
 var app = angular.module('app', dependencies) /////////////////////////////////
+                 // .config(config)
                  .controller(controllers)
                  .service(services)
                  .filter(filters)
