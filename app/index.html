@@ -29,9 +29,9 @@
     <button ng-click='create()'>
   </section>
   <section ng-controller='MessagesCtrl' class='messages'>
-    <ul ng-repeat='(id, message) in messages'>
+    <ul ng-repeat='(key, message) in messages'>
       <li>
-        <span>{{message.senderName}}:</span>
+        <span>{{message.senderUserKey}}:</span>
         <span>{{message.text}}</span>
       </li>
     </ul>

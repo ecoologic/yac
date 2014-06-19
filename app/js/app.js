@@ -4,42 +4,42 @@ controllers.MessagesCtrl = function($scope, Resource) {
   $scope.messages = Resource.messages;
 };
 controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
-  var resetNewMessage = function() {
-    $scope.newMessage = {
-      text:       '',
-      senderName: 'erik' // Authentication.getCurrentUser().username
-    };
-  };
-  resetNewMessage();
-
   $scope.create = function() {
+    $scope.newMessage.senderUserKey = Authentication.getCurrentUserKey();
     Resource.messages.$add($scope.newMessage);
-    resetNewMessage();
+    $scope.newMessage = {};
   };
 };
 controllers.AuthenticationCtrl = function($scope, Authentication, Resource) {
   $scope.create = function() {
     Authentication.login().then(function(user) {
       console.log('AuthenticationCtrl#create - login - then', user);
-      var currentUser = { username: user.username };
-      Resource.users[user.username] = currentUser;
-      Resource.users.$save(user.username);
-      $scope.currentUser = currentUser;
-      $scope.isLoggedIn = !!$scope.currentUser;
+      $scope.currentUser = user;
+      $scope.isLoggedIn = !!user;
     });
   };
 };
 var services = {}; ////////////////////////////////////////////////////////////
-services.Authentication = function(Resource, $firebaseSimpleLogin) {
-  var currentUser, errors;
-  var auth = $firebaseSimpleLogin(Resource.firebaseRef, function(errors, user) {
-    console.log('Authentication - $firebaseSimpleLogin', errors, user);
-    errors      = errors;
-    currentUser = user;
-  });
+services.Authentication = function(Resource, $firebaseSimpleLogin, $q) {
+  var currentUser, currentUserKey, errors;
+  var auth = $firebaseSimpleLogin(Resource.firebaseRef);
+  var afterLogin = function(user) {
+    console.log('Authentication - afterLogin', user);
+    errors         = errors;
+    currentUser    = user;
+    currentUserKey = user.username;
+
+    if(!errors) {
+      Resource.users[user.username] = user;
+      Resource.users.$save(user.username);
+    };
+
+    return user;
+  };
   return {
-    login:          function() { return auth.$login('github'); },
-    getCurrentUser: function() { return currentUser; }
+    login:             function() { return auth.$login('github').then(afterLogin); },
+    getCurrentUser:    function() { return currentUser; },
+    getCurrentUserKey: function() { return currentUserKey; }
   };
 };
 services.Resource = function($firebase) {
@@ -68,7 +68,7 @@ var dependencies = [ //////////////////////////////////////////////////////////
 //     });
 // };
 var app = angular.module('app', dependencies) /////////////////////////////////
-                 // .config(config)
+                 // .config()
                  .controller(controllers)
                  .service(services)
                  .filter(filters)
