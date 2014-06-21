@@ -3,13 +3,16 @@
 /* Global */
 html body { background-color: #bed; }
 
-.avatar.small {
-  height: 32px;
-  width:  32px;
-}
-
-/* messages */
+/* Messages */
 .messages .meta {
   color: gray;
   font-style: italic;
+}
+.messages .avatar {
+  margin-right: 1em;
+}
+
+/* New Message */
+.new-message .btn {
+  width: 100%;
 }

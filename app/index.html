@@ -21,24 +21,36 @@
   <script src='js/app.js' type='text/javascript'></script>
 
 </head>
-<body ng-app='app' class='container'>
-  <authentication></authentication>
-  <section ng-controller='MessagesCtrl' class='messages'>
-    <div ng-repeat='(key, message) in messages'>
-        <span class='meta'>
-          <img src='{{ users[message.senderUserKey].thirdPartyUserData.avatar_url }}'
-               class='avatar small'>
-          {{ message.senderUserKey }} ({{ message.createdAt }}):
-        </span>
-        <div ng-bind-html='message.text | markdown'></div>
-    </div>
-  </section>
-  <section ng-controller='NewMessageCtrl' class='new-message'>
-    <form name='newMessageForm' ng-submit='create()'>
-      <input name='newMessageText' ng-model='newMessage.text'
-             autofocus required minlength='1' placeholder="I'm thinking that..."/>
-      <input type='submit'>
-    </form>
-  </section>
+<body ng-app='app'>
+  <div class='container'>
+    <authentication></authentication>
+    <section ng-controller='MessagesCtrl' class='messages'>
+      <div ng-repeat='(key, message) in messages'>
+        <div class='panel panel-default'>
+          <div class='meta panel-heading'>
+            <img src='{{ users[message.senderUserKey].thirdPartyUserData.avatar_url + "s=32" }}'
+                 class='avatar'>
+            {{ message.senderUserKey }} ({{ message.createdAt }}):
+          </div>
+          <div class='message panel-body' ng-bind-html='message.text | markdown'></div>
+        </div>
+      </div>
+    </section>
+    <section ng-controller='NewMessageCtrl' class='new-message row'>
+      <form name='newMessageForm' ng-submit='create()' role='form' class='col-lg-6'>
+        <div class="input-group">
+          <label for='newMessageText' class='sr-only'>Have your say</label>
+          <input name='newMessageText' ng-model='newMessage.text'
+                 autofocus required minlength='1' class='form-control'
+                 autocomplete='off' placeholder="I'm thinking that..."/>
+          <span class="input-group-btn">
+            <button type='submit' ng-disabled='newMessageForm.$invalid' class='btn btn-primary'>
+              &raquo;
+            </button>
+          </span>
+        </div>
+      </form>
+    </section>
+  </div>
 </body>
 </html>
