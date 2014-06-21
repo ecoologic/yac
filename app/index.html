@@ -26,7 +26,9 @@
   <authentication></authentication>
   <section ng-controller='MessagesCtrl' class='messages'>
     <div ng-repeat='(key, message) in messages'>
-        <span class='sender-name'>{{ message.senderUserKey }}: </span>
+        <span class='meta'>
+          {{ message.senderUserKey }} ({{ message.createdAt }}):
+        </span>
         <div ng-bind-html='message.text | markdown'></div>
     </div>
   </section>

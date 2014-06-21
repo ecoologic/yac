@@ -24,6 +24,7 @@ controllers.MessagesCtrl = function($scope, Resource) {
 controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
   $scope.create = function() {
     $scope.newMessage.senderUserKey = Authentication.getCurrentUserKey();
+    $scope.newMessage.createdAt = (new Date()).toLocaleString();
     Resource.messages.$add($scope.newMessage);
     $scope.newMessage = {};
   };

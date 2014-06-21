@@ -1,6 +1,8 @@
 .test { border: 1px solid green; }
+
 html body { background-color: #bed; }
-.sender-name {
+
+.messages .meta {
   color: gray;
   font-style: italic;
 }
