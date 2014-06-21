@@ -24,11 +24,6 @@
 </head>
 <body ng-app='app' class='container'>
   <authentication></authentication>
-  <section ng-controller='AuthenticationCtrl' class='authentication'>
-    <span ng-show='currentUser'>Your are logged in as {{currentUser.username}}</span>
-    <span ng-show='!currentUser'>Your are not logged in</span>
-    <button ng-click='create()'>
-  </section>
   <section ng-controller='MessagesCtrl' class='messages'>
     <ul ng-repeat='(key, message) in messages'>
       <li>

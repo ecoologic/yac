@@ -1,10 +1,21 @@
 'use strict';
 var directives = {}; //////////////////////////////////////////////////////////
-directives.authentication = function() {
+directives.authentication = function(Authentication) {
   return {
-    restrict: 'E',
-    template: "<section class='authentication'>Authentication</section>"
-  }
+    restrict:    'E',
+    scope:       '@',
+    templateUrl: 'partials/authentication.html',
+    link: function(scope) {
+      scope.currentUser = Authentication.getCurrentUser();
+
+      scope.create = function() {
+        Authentication.login().then(function(user) {
+          console.log('AuthenticationCtrl#create - login - then', user);
+          scope.currentUser = user;
+        });
+      };
+    }
+  };
 };
 var controllers = {}; /////////////////////////////////////////////////////////
 controllers.MessagesCtrl = function($scope, Resource) {
@@ -15,16 +26,6 @@ controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
     $scope.newMessage.senderUserKey = Authentication.getCurrentUserKey();
     Resource.messages.$add($scope.newMessage);
     $scope.newMessage = {};
-  };
-};
-controllers.AuthenticationCtrl = function($scope, Authentication) {
-  $scope.currentUser = Authentication.getCurrentUser();
-
-  $scope.create = function() {
-    Authentication.login().then(function(user) {
-      console.log('AuthenticationCtrl#create - login - then', user);
-      $scope.currentUser = user;
-    });
   };
 };
 var services = {}; ////////////////////////////////////////////////////////////

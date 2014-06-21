@@ -1,0 +1,7 @@
+<section class='authentication'>
+  <div ng-show='currentUser'>Your are logged in as {{currentUser.username}}</div>
+  <div ng-show='!currentUser'>
+    Your are not logged in
+    <button ng-click='create()'>Log In</button>
+  </div>
+</section>
