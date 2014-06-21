@@ -3,21 +3,13 @@ var directives = {}; //////////////////////////////////////////////////////////
 directives.authentication = function(Authentication) {
   return {
     restrict:    'E',
-    scope:       '@',
+    scope:       '=',
     templateUrl: 'partials/authentication.html',
     link: function(scope) {
-      scope.currentUser = Authentication.getCurrentUser();
-
-      scope.login = function() {
-        Authentication.login().then(function(user) {
-          console.log('Authentication#login', user);
-          scope.currentUser = user;
-        });
-      };
-      scope.logout = function() {
-        Authentication.logout();
-        scope.currentUser = null;
-      };
+      scope.login          = Authentication.login;
+      scope.logout         = Authentication.logout;
+      scope.currentUserKey = Authentication.currentUserKey;
+      scope.currentUser    = Authentication.currentUser;
     }
   };
 };
@@ -25,10 +17,17 @@ var controllers = {}; /////////////////////////////////////////////////////////
 controllers.MessagesCtrl = function($scope, Resource) {
   $scope.users    = Resource.users;
   $scope.messages = Resource.messages;
+
+  $scope.delete = function(key) {
+    Resource.messages.$remove(key);
+  }
 };
 controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
+  $scope.currentUserKey = Authentication.currentUserKey;
+  $scope.currentUser    = Authentication.currentUser;
+
   $scope.create = function() {
-    $scope.newMessage.senderUserKey = Authentication.getCurrentUserKey();
+    $scope.newMessage.senderUserKey = currentUserKey;
     $scope.newMessage.createdAt = (new Date()).toLocaleString();
     Resource.messages.$add($scope.newMessage);
     $scope.newMessage = {};
@@ -64,10 +63,10 @@ services.Authentication = function(Resource, $cookieStore, $firebaseSimpleLogin)
   };
 
   return {
-    login:             function() { return auth.$login('github').then(afterLogin); },
-    logout:            logout,
-    getCurrentUser:    function() { return currentUser; },
-    getCurrentUserKey: function() { return currentUserKey; }
+    login:          function() { return auth.$login('github').then(afterLogin); },
+    logout:         logout,
+    currentUser:    currentUser,
+    currentUserKey: currentUserKey
   };
 };
 services.Resource = function($firebase) {

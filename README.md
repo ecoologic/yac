@@ -17,15 +17,16 @@ Yet another chat...
 * stores messages
 * message markdown
 * show sender avatar
+* FB security roles
+* Delete messages (own only)
 
 ### Todo
 
 * Routes to prevent access to guests
 * Group chats
-* Delete messages (own only)
 * Edit messages (own only)
-* User autocomplete in new message
+* User autocomplete in new message http://ngmodules.org/modules/ngAutocomplete
 
-## Run the server
+## Run the server (from `app/`)
 
     python -m SimpleHTTPServer # => localhost:8000

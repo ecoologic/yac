@@ -14,12 +14,16 @@ html body {
 
 /* Messages */
 .messages .meta {
-  color: gray;
-  font-style: italic;
+  color:         gray;
+  font-style:    italic;
   margin-bottom: .2em;
 }
+.messages .meta .close {
+  float: right;
+}
+
 .messages .avatar {
-  margin-right: 1em;
+  margin-right:   1em;
 }
 .messages .message {
   margin-bottom: .5em;
