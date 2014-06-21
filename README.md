@@ -10,9 +10,21 @@ Yet another chat...
 * Bootstrap 3.1
 * LoDash 2.4
 
-## Status of the app
+## Status of the app (working)
 
-Just initialized
+* Login / logout
+* store user in session
+* stores messages
+* message markdown
+* show sender avatar
+
+### Todo
+
+* Routes to prevent access to guests
+* Group chats
+* Delete messages (own only)
+* Edit messages (own only)
+* User autocomplete in new message
 
 ## Run the server
 
