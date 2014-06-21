@@ -66,7 +66,13 @@ services.Resource = function($firebase) {
   };
 };
 var filters = {}; /////////////////////////////////////////////////////////////
-var run = function($rootScope, $log) {
+filters.markdown = function($sce) {
+  var converter = new Showdown.converter();
+  return function(text) {
+    return $sce.trustAsHtml(converter.makeHtml(text || ''));
+  };
+};
+var run = function($rootScope, $log) { ////////////////////////////////////////
   $rootScope.$log = $log;
 };
 var dependencies = [ //////////////////////////////////////////////////////////

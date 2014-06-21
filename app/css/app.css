@@ -1,3 +1,6 @@
-html body { background-color: #bed; }
-
 .test { border: 1px solid green; }
+html body { background-color: #bed; }
+.sender-name {
+  color: gray;
+  font-style: italic;
+}
