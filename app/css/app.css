@@ -1,7 +1,16 @@
 .test { border: 1px solid red; }
 
 /* Global */
-html body { background-color: #bed; }
+html body {
+  background-color: #bed;
+  margin-top:       .2em;
+  margin-bottom:    .2em;
+}
+
+/* Authentication */
+.authentication .btn {
+  float: right;
+}
 
 /* Messages */
 .messages .meta {
@@ -19,7 +28,4 @@ html body { background-color: #bed; }
 /* New Message */
 .new-message .btn {
   width: 100%;
-}
-.new-message {
-  margin-bottom: 1em;
 }

@@ -8,11 +8,15 @@ directives.authentication = function(Authentication) {
     link: function(scope) {
       scope.currentUser = Authentication.getCurrentUser();
 
-      scope.create = function() {
+      scope.login = function() {
         Authentication.login().then(function(user) {
-          console.log('AuthenticationCtrl#create - login - then', user);
+          console.log('Authentication#login', user);
           scope.currentUser = user;
         });
+      };
+      scope.logout = function() {
+        Authentication.logout();
+        scope.currentUser = null;
       };
     }
   };
@@ -52,9 +56,16 @@ services.Authentication = function(Resource, $cookieStore, $firebaseSimpleLogin)
 
     return user;
   };
+  var logout = function() {
+    console.log('Authentication - logout');
+    $cookieStore.remove('session');
+    currentUser    = null;
+    currentUserKey = null;
+  };
 
   return {
     login:             function() { return auth.$login('github').then(afterLogin); },
+    logout:            logout,
     getCurrentUser:    function() { return currentUser; },
     getCurrentUserKey: function() { return currentUserKey; }
   };

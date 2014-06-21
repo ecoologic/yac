@@ -29,7 +29,7 @@
         <div class='meta'>
           <img src='{{ users[message.senderUserKey].thirdPartyUserData.avatar_url + "s=32" }}'
                class='avatar'>
-          {{ message.senderUserKey }} ({{ message.createdAt | cleanTime }}):
+          {{ message.createdAt | cleanTime }} &mdash; {{ message.senderUserKey }}:
         </div>
         <div class='message well well-sm' ng-bind-html='message.text | markdown'></div>
       </div>
