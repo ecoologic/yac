@@ -1,7 +1,14 @@
-.test { border: 1px solid green; }
+.test { border: 1px solid red; }
 
+/* Global */
 html body { background-color: #bed; }
 
+.avatar.small {
+  height: 32px;
+  width:  32px;
+}
+
+/* messages */
 .messages .meta {
   color: gray;
   font-style: italic;

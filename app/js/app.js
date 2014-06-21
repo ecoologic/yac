@@ -19,6 +19,7 @@ directives.authentication = function(Authentication) {
 };
 var controllers = {}; /////////////////////////////////////////////////////////
 controllers.MessagesCtrl = function($scope, Resource) {
+  $scope.users    = Resource.users;
   $scope.messages = Resource.messages;
 };
 controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
@@ -39,7 +40,7 @@ services.Authentication = function(Resource, $cookieStore, $firebaseSimpleLogin)
   };
   console.log('Authentication - ', currentUserKey);
 
-  var auth = $firebaseSimpleLogin(Resource.firebaseRef);
+  var auth = $firebaseSimpleLogin(Resource.ref(''));
   var afterLogin = function(user) {
     console.log('Authentication - afterLogin', user);
     currentUser    = user;
@@ -61,7 +62,7 @@ services.Authentication = function(Resource, $cookieStore, $firebaseSimpleLogin)
 services.Resource = function($firebase) {
   var firebaseUrl = 'https://yetanotherchat.firebaseio.com/development/';
   return {
-    firebaseRef: new Firebase(firebaseUrl),
+    ref:         function(path) { return new Firebase(firebaseUrl + path) },
     messages:    $firebase(new Firebase(firebaseUrl + 'messages')),
     users:       $firebase(new Firebase(firebaseUrl + 'users')),
   };
@@ -81,17 +82,8 @@ var dependencies = [ //////////////////////////////////////////////////////////
                      // https://www.firebase.com/docs/queries.html
                      // https://www.firebase.com/docs/data-structure.html
   'ngCookies'
-  // 'ui.router'        // https://github.com/angular-ui/ui-router
 ];
-// var config = function($stateProvider, $urlRouterProvider) { ///////////////////
-//   $stateProvider
-//     .state('authentication', {
-//       url:         '/authentication',
-//       templateUrl: 'partials/authentication/new.html'
-//     });
-// };
 var app = angular.module('app', dependencies) /////////////////////////////////
-                 // .config()
                  .controller(controllers)
                  .directive(directives)
                  .service(services)
