@@ -74,6 +74,11 @@ filters.markdown = function($sce) {
     return $sce.trustAsHtml(converter.makeHtml(text || ''));
   };
 };
+filters.cleanTime = function() {
+  return function(timestamp) {
+    return timestamp.replace((new Date()).toLocaleDateString(), '');
+  };
+};
 var run = function($rootScope, $log) { ////////////////////////////////////////
   $rootScope.$log = $log;
 };
