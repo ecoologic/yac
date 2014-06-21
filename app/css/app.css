@@ -7,12 +7,19 @@ html body { background-color: #bed; }
 .messages .meta {
   color: gray;
   font-style: italic;
+  margin-bottom: .2em;
 }
 .messages .avatar {
   margin-right: 1em;
+}
+.messages .message {
+  margin-bottom: .5em;
 }
 
 /* New Message */
 .new-message .btn {
   width: 100%;
+}
+.new-message {
+  margin-bottom: 1em;
 }
