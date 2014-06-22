@@ -14,13 +14,11 @@ directives.authentication = function(Authentication) {
   };
 };
 var controllers = {}; /////////////////////////////////////////////////////////
-controllers.MessagesCtrl = function($scope, Resource) {
+controllers.MessagesCtrl = function($scope, Resource, User) {
   var setMessageSenderUserAvatarUrl = function(messageKey) {
     var message = $scope.messages[messageKey];
     if(!message.senderUserAvatarUrl) {
-      var path = 'users/' + message.senderUserKey + '/thirdPartyUserData/avatar_url';
-      var ref = Resource.ref(path);
-      ref.on('value', function(snapshot) {
+      User(message.senderUserKey).avatarUrl(function(snapshot) {
         $scope.messages[messageKey].senderUserAvatarUrl = snapshot.val() || 'images/missing_avatar.png?';
       });
     }
@@ -48,6 +46,16 @@ controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
   };
 };
 var services = {}; ////////////////////////////////////////////////////////////
+services.User = function(Resource) {
+  return function(key) {
+    return {
+      avatarUrl: function(callback) {
+        var path = 'users/' + key + '/thirdPartyUserData/avatar_url';
+        Resource.ref(path).on('value', callback);
+      }
+    };
+  };
+};
 services.Authentication = function(Resource, $cookieStore, $firebaseSimpleLogin) {
   var currentUser, currentUserKey;
   var session = $cookieStore.get('session');
