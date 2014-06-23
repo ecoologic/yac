@@ -30,3 +30,4 @@ Yet another chat...
 ## Run the server (from `app/`)
 
     python -m SimpleHTTPServer # => localhost:8000
+    # or any other http server like middleman
