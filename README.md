@@ -13,19 +13,20 @@ Yet another chat...
 ## Status of the app (working)
 
 * Login / logout
-* store user in session
-* stores messages
-* message markdown
-* show sender avatar
+* Store user in session
+* Stores messages
+* Message markdown
+* Show sender avatar
 * FB security roles
 * Delete messages (own only)
+* Icons in messages
 
 ### Todo
 
 * Routes to prevent guests access
 * Group chats
 * Edit messages (own only)
-* ecomotions
+* better icons
 * User autocomplete in new message http://ngmodules.org/modules/ngAutocomplete
 
 ## Run the server (from `app/`)

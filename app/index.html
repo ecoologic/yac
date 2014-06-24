@@ -50,7 +50,7 @@
                     ng-click='delete(key)'
                     class='close' aria-hidden='true'>&times;</button>
           </div>
-          <div class='message well well-sm' ng-bind-html='message.text | markdown'></div>
+          <div class='message well well-sm' ng-bind-html='message.text | markdown | iconize'></div>
         </div>
       </section>
       <section ng-controller='NewMessageCtrl' class='new-message row' ng-show='currentUser'>

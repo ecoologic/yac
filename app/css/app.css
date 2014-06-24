@@ -1,3 +1,6 @@
+/* Icons */
+@import url(http://weloveiconfonts.com/api/?family=fontelico);
+
 .test { border: 1px solid red; }
 
 /* Global */
@@ -27,6 +30,9 @@ html body {
 }
 .messages .message {
   margin-bottom: .5em;
+}
+.messages .message [class*="fontelico-"]:before {
+  font-family: 'fontelico', sans-serif;
 }
 
 /* New Message */
