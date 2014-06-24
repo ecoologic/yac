@@ -35,6 +35,10 @@ html body {
   vertical-align: bottom;
 }
 
+.messages .isnt-current-user-message .sender {
+  color: grey;
+}
+
 .messages .meta .close {
   float: right;
 }

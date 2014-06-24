@@ -46,11 +46,12 @@
     <article class='chat'>
       <section ng-controller='MessagesCtrl' ng-show='currentUser' class='messages'>
         <div ng-repeat='(key, message) in messages'>
-          <div class='meta'>
+          <div ng-class="isCurrentUserMessage(message.senderUserKey) ? 'is-current-user-message' : 'isnt-current-user-message'"
+               class='meta'>
             <img ng-src='{{ message.senderAvatarUrl }}s=24' class='avatar'>
             <span class='text'>
               <time>{{ message.createdAt | cleanTime }}</time> &mdash;
-              <b>{{ message.senderUserKey }}</b>:
+              <b class='sender'>{{ message.senderUserKey }}</b>:
             </span>
             <button ng-show='deleteable(message.senderUserKey)' ng-click='delete(key)'
                     class='close' aria-hidden='true'>&times;</button>

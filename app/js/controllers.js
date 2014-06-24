@@ -2,11 +2,11 @@
 var controllers = {};
 
 controllers.AuthenticationCtrl = function($scope, Authentication, User) {
-  $scope.watch('currentUserKey', function(key) {
+  $scope.$watch('currentUserKey', function(key) {
     User(key).avatarUrl(function(snapshot) {
       $scope.avatarUrl = snapshot.val();
     });
-  };
+  });
 
   $scope.login  = Authentication.login;
   $scope.logout = Authentication.logout;
@@ -32,6 +32,10 @@ controllers.MessagesCtrl = function($scope, Resource, User) {
   });
 
   $scope.messages = Resource.messages;
+
+  $scope.isCurrentUserMessage = function(messageUserKey) {
+    return $scope.currentUserKey === messageUserKey;
+  }
 
   $scope.deleteable = function(senderUserKey) {
     return senderUserKey === $scope.currentUserKey;
