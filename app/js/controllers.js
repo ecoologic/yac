@@ -2,7 +2,7 @@
 var controllers = {};
 
 controllers.AuthenticationCtrl = function($scope, Authentication, User) {
-  User($scope.currentUserKey).avatarUrl(function(snapshot) {
+  User($scope.currentUserKey).avatarUrl(function(snapshot) { // FIXME: not bound, works on reload
     $scope.avatarUrl = snapshot.val();
   });
 
@@ -19,6 +19,7 @@ controllers.MessagesCtrl = function($scope, Resource, User) {
       });
     }
   };
+
   // assigns: $scope.messages[n].senderAvatarUrl
   $scope.$watchCollection('messages', function(newMessages, oldMessages) {
     if(newMessages) {

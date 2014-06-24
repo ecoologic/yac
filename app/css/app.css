@@ -10,18 +10,31 @@ html body {
   margin-bottom:    .2em;
 }
 
+[class*="fontelico-"]:before {
+  font-family: 'fontelico', sans-serif;
+}
+
 /* Authentication */
 .authentication .btn {
-  float: right;
+  color:       #E2FFFB;
+  font-weight: bold;
+  float:       right;
+  margin-left: 1em;
 }
 
 /* Messages */
 .messages .meta {
-  color:          gray;
+  margin-bottom: .2em;
+}
+
+.messages .meta .text {
+  color:          #088;
   font-style:     italic;
-  margin-bottom:  .2em;
+  height:         1.3em;
+  display:        inline-block;
   vertical-align: bottom;
 }
+
 .messages .meta .close {
   float: right;
 }
@@ -29,11 +42,12 @@ html body {
 .messages .avatar {
   margin-right:   .2em;
 }
+
 .messages .message {
-  margin-bottom: .2em;
+  margin-bottom: .2em
 }
-.messages .message [class*="fontelico-"]:before {
-  font-family: 'fontelico', sans-serif;
+.messages .message p:last-child {
+  margin-bottom: 0;
 }
 
 /* New Message */

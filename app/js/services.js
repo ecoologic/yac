@@ -31,7 +31,7 @@ services.Authentication = function($rootScope, $cookieStore, $firebaseSimpleLogi
 
   var session = $cookieStore.get('session');
   setCurrentUser(session && session.currentUserKey);
-  console.log('Authentication - ', session.currentUserKey);
+  console.log('Authentication - ', session && session.currentUserKey);
 
   return {
     login: function() {

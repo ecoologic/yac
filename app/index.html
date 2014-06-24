@@ -31,11 +31,14 @@
 <body ng-app='app'>
   <div class='container'>
     <section ng-controller='AuthenticationCtrl' class='authentication'>
-      <button ng-show='currentUser' ng-click='logout()' class='btn btn-primary btn-xs'>
-        Log Out {{ currentUser.username }}
-        <img ng-src='{{ avatarUrl }}s=12'>
+      <button ng-show='currentUser' ng-click='logout()' class='btn btn-primary btn-xs'
+              title="Log Out">
+        <img ng-src='{{ avatarUrl }}s=14'>
+        {{ currentUser.username }}
+        <span class='glyphicon glyphicon-log-out'></span>
       </button>
       <button ng-show='!currentUser' ng-click='login()' class='btn btn-primary btn-xs'>
+        <span class='glyphicon glyphicon-log-in'></span>
         Log In
       </button>
     </section>
@@ -45,7 +48,10 @@
         <div ng-repeat='(key, message) in messages'>
           <div class='meta'>
             <img ng-src='{{ message.senderAvatarUrl }}s=24' class='avatar'>
-            {{ message.createdAt | cleanTime }} &mdash; {{ message.senderUserKey }}:
+            <span class='text'>
+              <time>{{ message.createdAt | cleanTime }}</time> &mdash;
+              <b>{{ message.senderUserKey }}</b>:
+            </span>
             <button ng-show='deleteable(message.senderUserKey)' ng-click='delete(key)'
                     class='close' aria-hidden='true'>&times;</button>
           </div>
