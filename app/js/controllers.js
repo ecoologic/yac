@@ -1,8 +1,9 @@
 'use strict';
 var controllers = {};
 
-controllers.AuthenticationCtrl = function($scope, Authentication, User) {
-  User($scope.currentUserKey).avatarUrl(function(snapshot) {
+controllers.AuthenticationCtrl = function($scope, Authentication, CurrentUser, User) {
+  $scope.currentUserKey = CurrentUser.getKey();
+  User($scope.currentUserKey).avatarUrl(function(snapshot) { // $scope.currentUserKey
     $scope.avatarUrl = snapshot.val();
   });
 

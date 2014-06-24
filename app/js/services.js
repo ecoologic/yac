@@ -50,7 +50,8 @@ services.Authentication = function($cookieStore, $firebaseSimpleLogin, CurrentUs
 services.CurrentUser = function($rootScope) { // FIXME: don't use $rootScope
   return {
     setValue: function(value) { $rootScope.currentUser = value },
-    setKey: function(key) { $rootScope.currentUserKey = key },
+    setKey: function(key) { $rootScope.currentUserKey = key; $rootScope.$apply; },
+    getKey: function() { return $rootScope.currentUserKey; },
     value: $rootScope.currentUser,
     key:   $rootScope.currentUserKey
   };
