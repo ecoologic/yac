@@ -10,24 +10,26 @@ Yet another chat...
 * Bootstrap 3.1
 * LoDash 2.4
 
-## Status of the app (working)
+## Working features
 
 * Login / logout
 * Store user in session
+* Some Firebase security roles
+* Show user avatar
 * Stores messages
-* Message markdown
-* Show sender avatar
-* FB security roles
 * Delete messages (own only)
+* Message markdown
 * Icons in messages
 
 ### Todo
 
-* Routes to prevent guests access
+* Ui-router to prevent guest access
+* Limit messages
 * Group chats
 * Edit messages (own only)
-* better icons
+* Better icons
 * User autocomplete in new message http://ngmodules.org/modules/ngAutocomplete
+* Improve Firebase security roles
 
 ## Run the server (from `app/`)
 
