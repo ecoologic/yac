@@ -19,7 +19,7 @@ Yet another chat...
 * Stores messages
 * Delete messages (own only)
 * Message markdown
-* Icons in messages
+* Smiles in messages (http://fontello.com/)
 
 ### Todo
 

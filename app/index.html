@@ -4,6 +4,9 @@
   <meta content='text/html;charset=utf-8' http-equiv='Content-Type'>
   <meta content='utf-8' http-equiv='encoding'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta content='chat angular firebase angularfire erikecoologic ecoologic'>
+  <link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+
   <title>Yet Another Chat</title>
 
   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
@@ -28,40 +31,36 @@
 <body ng-app='app'>
   <div class='container'>
     <section ng-controller='AuthenticationCtrl' class='authentication'>
-      <button ng-show='currentUser' ng-click='logout()'
-              class='btn btn-primary btn-xs'>
+      <button ng-show='currentUser' ng-click='logout()' class='btn btn-primary btn-xs'>
         Log Out {{ currentUser.username }}
         <img ng-src='{{ avatarUrl }}s=12'>
       </button>
-      <button ng-show='!currentUser' ng-click='login()'
-              class='btn btn-primary btn-xs'>
+      <button ng-show='!currentUser' ng-click='login()' class='btn btn-primary btn-xs'>
         Log In
       </button>
     </section>
 
     <article class='chat'>
-      <section ng-controller='MessagesCtrl' class='messages' ng-show='currentUser'>
+      <section ng-controller='MessagesCtrl' ng-show='currentUser' class='messages'>
         <div ng-repeat='(key, message) in messages'>
           <div class='meta'>
-            <img ng-src='{{ message.senderUserAvatarUrl }}s=24'
-                 class='avatar'>
+            <img ng-src='{{ message.senderAvatarUrl }}s=24' class='avatar'>
             {{ message.createdAt | cleanTime }} &mdash; {{ message.senderUserKey }}:
-            <button ng-show='deleteable(message.senderUserKey)'
-                    ng-click='delete(key)'
+            <button ng-show='deleteable(message.senderUserKey)' ng-click='delete(key)'
                     class='close' aria-hidden='true'>&times;</button>
           </div>
-          <div class='message well well-sm' ng-bind-html='message.text | markdown | iconize'></div>
+          <div class='message well well-sm' ng-bind-html='message.text | markdown | iconize'/>
         </div>
       </section>
-      <section ng-controller='NewMessageCtrl' class='new-message row' ng-show='currentUser'>
-        <form name='newMessageForm' ng-submit='create()' role='form' class='col-lg-6'>
+      <section ng-controller='NewMessageCtrl' ng-show='currentUser' class='new-message row'>
+        <form ng-submit='create()' name='newMessageForm' role='form' class='col-lg-6'>
           <div class="input-group">
             <label for='newMessageText' class='sr-only'>Have your say</label>
-            <input name='newMessageText' ng-model='newMessage.text'
-                   autofocus required minlength='1' class='form-control'
-                   autocomplete='off' placeholder="I'm **thinking** _that_... :thumbsup:"/>
+            <input ng-model='newMessage.text' name='newMessageText' class='form-control'
+                   required minlength='1' autocomplete='off' autofocus
+                   placeholder="I'm **thinking** _that_... :thumbsup:"/>
             <span class="input-group-btn">
-              <button type='submit' ng-disabled='newMessageForm.$invalid' class='btn btn-primary'>
+              <button ng-disabled='newMessageForm.$invalid' class='btn btn-primary'>
                 &raquo;
               </button>
             </span>

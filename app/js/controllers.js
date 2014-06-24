@@ -11,18 +11,19 @@ controllers.AuthenticationCtrl = function($scope, Authentication, User) {
 };
 
 controllers.MessagesCtrl = function($scope, Resource, User) {
-  var setMessageSenderUserAvatarUrl = function(messageKey) {
+  var setMessageSenderAvatarUrl = function(messageKey) {
     var message = $scope.messages[messageKey];
-    if(!message.senderUserAvatarUrl) {
+    if(!message.senderAvatarUrl) {
       User(message.senderUserKey).avatarUrl(function(snapshot) {
-        $scope.messages[messageKey].senderUserAvatarUrl = snapshot.val() || 'images/missing_avatar.png?';
+        $scope.messages[messageKey].senderAvatarUrl = snapshot.val() || 'images/missing_avatar.png?';
       });
     }
   };
+  // assigns: $scope.messages[n].senderAvatarUrl
   $scope.$watchCollection('messages', function(newMessages, oldMessages) {
     if(newMessages) {
       _.each(newMessages.$getIndex(), function(messageKey) {
-        setMessageSenderUserAvatarUrl(messageKey);
+        setMessageSenderAvatarUrl(messageKey);
       });
     };
   });

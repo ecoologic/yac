@@ -17,19 +17,20 @@ html body {
 
 /* Messages */
 .messages .meta {
-  color:         gray;
-  font-style:    italic;
-  margin-bottom: .2em;
+  color:          gray;
+  font-style:     italic;
+  margin-bottom:  .2em;
+  vertical-align: bottom;
 }
 .messages .meta .close {
   float: right;
 }
 
 .messages .avatar {
-  margin-right:   1em;
+  margin-right:   .2em;
 }
 .messages .message {
-  margin-bottom: .5em;
+  margin-bottom: .2em;
 }
 .messages .message [class*="fontelico-"]:before {
   font-family: 'fontelico', sans-serif;

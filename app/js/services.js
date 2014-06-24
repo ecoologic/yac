@@ -4,9 +4,9 @@ var services = {};
 services.Resource = function($firebase) {
   var firebaseUrl = 'https://yetanotherchat.firebaseio.com/development/';
   return {
-    ref:         function(path) { return new Firebase(firebaseUrl + path) },
-    messages:    $firebase(new Firebase(firebaseUrl + 'messages')),
-    users:       $firebase(new Firebase(firebaseUrl + 'users')),
+    ref:      function(path) { return new Firebase(firebaseUrl + path) },
+    messages: $firebase(new Firebase(firebaseUrl + 'messages')),
+    users:    $firebase(new Firebase(firebaseUrl + 'users')),
   };
 };
 
