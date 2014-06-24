@@ -47,7 +47,7 @@ services.Authentication = function($cookieStore, $firebaseSimpleLogin, CurrentUs
   };
 };
 
-services.CurrentUser = function($rootScope) { // FIXME: don't use $rootScope
+services.CurrentUser = function() {
   var currentUserKey, currentUser;
   return {
     setKey: function(key) { currentUserKey = key; },

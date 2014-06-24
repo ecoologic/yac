@@ -12,7 +12,7 @@ controllers.AuthenticationCtrl = function($scope, Authentication, CurrentUser, U
   $scope.logout = Authentication.logout;
 };
 
-controllers.MessagesCtrl = function($scope, Resource, User) {
+controllers.MessagesCtrl = function($scope, Resource, CurrentUser, User) {
   var setMessageSenderUserAvatarUrl = function(messageKey) {
     var message = $scope.messages[messageKey];
     if(!message.senderUserAvatarUrl) {
@@ -30,6 +30,8 @@ controllers.MessagesCtrl = function($scope, Resource, User) {
   });
 
   $scope.messages = Resource.messages;
+  $scope.currentUser = CurrentUser.getValue();
+  $scope.currentUserKey = CurrentUser.getKey();
 
   $scope.deleteable = function(senderUserKey) {
     return senderUserKey === $scope.currentUserKey;
@@ -40,7 +42,10 @@ controllers.MessagesCtrl = function($scope, Resource, User) {
   }
 };
 
-controllers.NewMessageCtrl = function($scope, Authentication, Resource) {
+controllers.NewMessageCtrl = function($scope, Authentication, Resource, CurrentUser) {
+  $scope.currentUser    = CurrentUser.getValue();
+  $scope.currentUserKey = CurrentUser.getKey();
+
   $scope.create = function() {
     $scope.newMessage.senderUserKey = $scope.currentUserKey;
     $scope.newMessage.createdAt = (new Date()).toLocaleString();
