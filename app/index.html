@@ -42,7 +42,7 @@
       <section ng-controller='MessagesCtrl' class='messages' ng-show='currentUser'>
         <div ng-repeat='(key, message) in messages'>
           <div class='meta'>
-            <img src='{{ message.senderUserAvatarUrl }}s=24'
+            <img ng-src='{{ message.senderUserAvatarUrl }}s=24'
                  class='avatar'>
             {{ message.createdAt | cleanTime }} &mdash; {{ message.senderUserKey }}:
             <button ng-show='deleteable(message.senderUserKey)'

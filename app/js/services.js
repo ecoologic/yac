@@ -21,12 +21,12 @@ services.User = function(Resource) {
   };
 };
 
-services.Authentication = function($rootScope, $cookieStore, $firebaseSimpleLogin, Resource) {
+services.Authentication = function($cookieStore, $firebaseSimpleLogin, CurrentUser, Resource) {
   var setCurrentUser = function(key, user) {
     $cookieStore.put('session', { currentUserKey: key });
-    $rootScope.currentUserKey = key;
-    $rootScope.currentUser = user || (key ? Resource.users.$child(key) : null); // FIXME: don't use $rootScope
-    console.log('Authentication#setCurrentUser', key, $rootScope.currentUser);
+    CurrentUser.setKey(key);
+    CurrentUser.setValue(user || (key ? Resource.users.$child(key) : null));
+    console.log('Authentication#setCurrentUser', key, CurrentUser.value);
   };
 
   var session = $cookieStore.get('session');
@@ -44,5 +44,14 @@ services.Authentication = function($rootScope, $cookieStore, $firebaseSimpleLogi
       });
     },
     logout: function() { setCurrentUser(null); }
+  };
+};
+
+services.CurrentUser = function($rootScope) { // FIXME: don't use $rootScope
+  return {
+    setValue: function(value) { $rootScope.currentUser = value },
+    setKey: function(key) { $rootScope.currentUserKey = key },
+    value: $rootScope.currentUser,
+    key:   $rootScope.currentUserKey
   };
 };
