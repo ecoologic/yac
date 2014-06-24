@@ -31,6 +31,7 @@
       <button ng-show='currentUser' ng-click='logout()'
               class='btn btn-primary btn-xs'>
         Log Out {{ currentUser.username }}
+        <img ng-src='{{ avatarUrl }}s=12'>
       </button>
       <button ng-show='!currentUser' ng-click='login()'
               class='btn btn-primary btn-xs'>
@@ -58,7 +59,7 @@
             <label for='newMessageText' class='sr-only'>Have your say</label>
             <input name='newMessageText' ng-model='newMessage.text'
                    autofocus required minlength='1' class='form-control'
-                   autocomplete='off' placeholder="I'm thinking that..."/>
+                   autocomplete='off' placeholder="I'm **thinking** _that_..."/>
             <span class="input-group-btn">
               <button type='submit' ng-disabled='newMessageForm.$invalid' class='btn btn-primary'>
                 &raquo;
