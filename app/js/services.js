@@ -26,7 +26,7 @@ services.Authentication = function($cookieStore, $firebaseSimpleLogin, CurrentUs
     $cookieStore.put('session', { currentUserKey: key });
     CurrentUser.setKey(key);
     CurrentUser.setValue(user || (key ? Resource.users.$child(key) : null));
-    console.log('Authentication#setCurrentUser', key, CurrentUser.value);
+    console.log('Authentication#setCurrentUser', key, CurrentUser.getValue());
   };
 
   var session = $cookieStore.get('session');
@@ -48,12 +48,11 @@ services.Authentication = function($cookieStore, $firebaseSimpleLogin, CurrentUs
 };
 
 services.CurrentUser = function($rootScope) { // FIXME: don't use $rootScope
-  var currentUserKey;
+  var currentUserKey, currentUser;
   return {
-    setValue: function(value) { $rootScope.currentUser = value },
     setKey: function(key) { currentUserKey = key; },
+    setValue: function(value) { currentUser = value },
     getKey: function() { return currentUserKey; },
-    value: $rootScope.currentUser,
-    key:   $rootScope.currentUserKey
+    getValue: function() { return currentUser; }
   };
 };

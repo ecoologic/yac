@@ -3,7 +3,8 @@ var controllers = {};
 
 controllers.AuthenticationCtrl = function($scope, Authentication, CurrentUser, User) {
   $scope.currentUserKey = CurrentUser.getKey();
-  User($scope.currentUserKey).avatarUrl(function(snapshot) { // $scope.currentUserKey
+  $scope.currentUser = CurrentUser.getValue();
+  User($scope.currentUserKey).avatarUrl(function(snapshot) {
     $scope.avatarUrl = snapshot.val();
   });
 
