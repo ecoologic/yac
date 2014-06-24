@@ -50,9 +50,9 @@ services.Authentication = function($cookieStore, $firebaseSimpleLogin, CurrentUs
 services.CurrentUser = function() {
   var currentUserKey, currentUser;
   return {
-    setKey: function(key) { currentUserKey = key; },
-    setValue: function(value) { currentUser = value },
-    getKey: function() { return currentUserKey; },
+    setKey:   function(key)     { currentUserKey = key; },
+    setValue: function(value)   { currentUser    = value },
+    getKey:   function() { return currentUserKey; },
     getValue: function() { return currentUser; }
   };
 };

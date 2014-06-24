@@ -1,18 +1,18 @@
 'use strict';
 var controllers = {};
 
-controllers.AuthenticationCtrl = function($scope, Authentication, CurrentUser, User) {
+controllers.AuthenticationCtrl = function($scope, Authentication, User, CurrentUser) {
   $scope.currentUserKey = CurrentUser.getKey();
-  $scope.currentUser = CurrentUser.getValue();
+  $scope.currentUser    = CurrentUser.getValue();
   User($scope.currentUserKey).avatarUrl(function(snapshot) {
     $scope.avatarUrl = snapshot.val();
   });
 
-  $scope.login  = Authentication.login;
-  $scope.logout = Authentication.logout;
+  $scope.login  = function() { Authentication.login(); };
+  $scope.logout = function() { Authentication.logout(); };
 };
 
-controllers.MessagesCtrl = function($scope, Resource, CurrentUser, User) {
+controllers.MessagesCtrl = function($scope, Resource, User, CurrentUser) {
   var setMessageSenderUserAvatarUrl = function(messageKey) {
     var message = $scope.messages[messageKey];
     if(!message.senderUserAvatarUrl) {
@@ -29,9 +29,9 @@ controllers.MessagesCtrl = function($scope, Resource, CurrentUser, User) {
     };
   });
 
-  $scope.messages = Resource.messages;
-  $scope.currentUser = CurrentUser.getValue();
+  $scope.messages       = Resource.messages;
   $scope.currentUserKey = CurrentUser.getKey();
+  $scope.currentUser    = CurrentUser.getValue();
 
   $scope.deleteable = function(senderUserKey) {
     return senderUserKey === $scope.currentUserKey;
@@ -48,7 +48,7 @@ controllers.NewMessageCtrl = function($scope, Authentication, Resource, CurrentU
 
   $scope.create = function() {
     $scope.newMessage.senderUserKey = $scope.currentUserKey;
-    $scope.newMessage.createdAt = (new Date()).toLocaleString();
+    $scope.newMessage.createdAt     = (new Date()).toLocaleString();
     Resource.messages.$add($scope.newMessage);
     $scope.newMessage = {};
   };
