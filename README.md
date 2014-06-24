@@ -22,9 +22,10 @@ Yet another chat...
 
 ### Todo
 
-* Routes to prevent access to guests
+* Routes to prevent guests access
 * Group chats
 * Edit messages (own only)
+* ecomotions
 * User autocomplete in new message http://ngmodules.org/modules/ngAutocomplete
 
 ## Run the server (from `app/`)
