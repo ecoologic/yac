@@ -16,6 +16,9 @@ html body {
 
 /* Authentication */
 .authentication .btn {
+  position:    fixed;
+  right:       .2em;
+  top:         .2em;
   color:       #E2FFFB;
   font-weight: bold;
   float:       right;
@@ -44,7 +47,7 @@ html body {
 }
 
 .messages .avatar {
-  margin-right:   .2em;
+  margin-right: .2em;
 }
 
 .messages .message {
