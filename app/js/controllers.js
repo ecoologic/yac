@@ -2,9 +2,11 @@
 var controllers = {};
 
 controllers.AuthenticationCtrl = function($scope, Authentication, User) {
-  User($scope.currentUserKey).avatarUrl(function(snapshot) { // FIXME: not bound, works on reload
-    $scope.avatarUrl = snapshot.val();
-  });
+  $scope.watch('currentUserKey', function(key) {
+    User(key).avatarUrl(function(snapshot) {
+      $scope.avatarUrl = snapshot.val();
+    });
+  };
 
   $scope.login  = Authentication.login;
   $scope.logout = Authentication.logout;
