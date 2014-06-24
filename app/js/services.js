@@ -21,32 +21,28 @@ services.User = function(Resource) {
   };
 };
 
-services.Authentication = function(Resource, $cookieStore, $firebaseSimpleLogin) {
-  var currentUser, currentUserKey;
-  var session = $cookieStore.get('session');
-
-  var setCurrentUserKey = function(key) {
+services.Authentication = function($rootScope, $cookieStore, $firebaseSimpleLogin, Resource) {
+  var setCurrentUser = function(key, user) {
     $cookieStore.put('session', { currentUserKey: key });
-    currentUser = key ? Resource.users.$child(key) : null;
-    console.log('setCurrentUserKey', currentUser);
-    return currentUserKey = key;
+    $rootScope.currentUserKey = key;
+    $rootScope.currentUser = user || (key ? Resource.users.$child(key) : null); // FIXME: don't use $rootScope
+    console.log('Authentication#setCurrentUser', key, $rootScope.currentUser);
   };
-  setCurrentUserKey(session['currentUserKey']);
-  console.log('Authentication - ', currentUserKey);
+
+  var session = $cookieStore.get('session');
+  setCurrentUser(session && session.currentUserKey);
+  console.log('Authentication - ', session.currentUserKey);
 
   return {
     login: function() {
       var auth = $firebaseSimpleLogin(Resource.ref(''));
       return auth.$login('github').then(function(user) {
         console.log('Authentication#login', user);
-        setCurrentUserKey(user.username);
+        setCurrentUser(user.username, user);
         Resource.users[user.username] = user;
         Resource.users.$save(user.username);
-        return user;
       });
     },
-    logout:            function() { setCurrentUserKey(null); },
-    getCurrentUser:    function() { return currentUser; },
-    getCurrentUserKey: function() { return currentUserKey; }
+    logout: function() { setCurrentUser(null); }
   };
 };

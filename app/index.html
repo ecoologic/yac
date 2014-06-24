@@ -30,7 +30,7 @@
     <section ng-controller='AuthenticationCtrl' class='authentication'>
       <button ng-show='currentUser' ng-click='logout()'
               class='btn btn-primary btn-xs'>
-        Log Out ({{ currentUser.username }})
+        Log Out {{ currentUser.username }}
       </button>
       <button ng-show='!currentUser' ng-click='login()'
               class='btn btn-primary btn-xs'>
@@ -39,20 +39,20 @@
     </section>
 
     <article class='chat'>
-      <section ng-controller='MessagesCtrl' class='messages' ng-show='Authentication.currentUser'>
+      <section ng-controller='MessagesCtrl' class='messages' ng-show='currentUser'>
         <div ng-repeat='(key, message) in messages'>
           <div class='meta'>
-            <img src='{{ message.senderUserAvatarUrl }}s=20'
+            <img src='{{ message.senderUserAvatarUrl }}s=24'
                  class='avatar'>
             {{ message.createdAt | cleanTime }} &mdash; {{ message.senderUserKey }}:
-            <button ng-show='message.senderUserKey === currentUserKey'
+            <button ng-show='deleteable(message.senderUserKey)'
                     ng-click='delete(key)'
                     class='close' aria-hidden='true'>&times;</button>
           </div>
           <div class='message well well-sm' ng-bind-html='message.text | markdown'></div>
         </div>
       </section>
-      <section ng-controller='NewMessageCtrl' class='new-message row' ng-show='Authentication.currentUser'>
+      <section ng-controller='NewMessageCtrl' class='new-message row' ng-show='currentUser'>
         <form name='newMessageForm' ng-submit='create()' role='form' class='col-lg-6'>
           <div class="input-group">
             <label for='newMessageText' class='sr-only'>Have your say</label>

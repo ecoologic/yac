@@ -1,10 +1,9 @@
 'use strict';
 var controllers = {};
 
-controllers.AuthenticationCtrl = function($scope, Resource, Authentication) {
-  $scope.login          = Authentication.login;
-  $scope.logout         = Authentication.logout;
-  $scope.currentUser    = Authentication.getCurrentUser();
+controllers.AuthenticationCtrl = function($scope, Authentication) {
+  $scope.login  = Authentication.login;
+  $scope.logout = Authentication.logout;
 };
 
 controllers.MessagesCtrl = function($scope, Resource, User) {
@@ -15,7 +14,7 @@ controllers.MessagesCtrl = function($scope, Resource, User) {
         $scope.messages[messageKey].senderUserAvatarUrl = snapshot.val() || 'images/missing_avatar.png?';
       });
     }
-  }
+  };
   $scope.$watchCollection('messages', function(newMessages, oldMessages) {
     if(newMessages) {
       _.each(newMessages.$getIndex(), function(messageKey) {
@@ -26,14 +25,18 @@ controllers.MessagesCtrl = function($scope, Resource, User) {
 
   $scope.messages = Resource.messages;
 
+  $scope.deleteable = function(senderUserKey) {
+    return senderUserKey === $scope.currentUserKey;
+  };
+
   $scope.delete = function(key) {
     Resource.messages.$remove(key);
   }
 };
 
-controllers.NewMessageCtrl = function($scope, Resource, Authentication) {
+controllers.NewMessageCtrl = function($scope, Authentication, Resource) {
   $scope.create = function() {
-    $scope.newMessage.senderUserKey = Authentication.currentUserKey;
+    $scope.newMessage.senderUserKey = $scope.currentUserKey;
     $scope.newMessage.createdAt = (new Date()).toLocaleString();
     Resource.messages.$add($scope.newMessage);
     $scope.newMessage = {};
