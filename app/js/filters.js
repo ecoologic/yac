@@ -9,16 +9,15 @@ filters.markdown = function($sce) {
 };
 
 filters.iconize = function($sce) {
-  var insertIcon = function(match, $1) {
-    return String.concat(
-      match[0],
-      '<span class="fontelico-emo-', $1, '" data-text="emo-', $1, '"/>',
-      match[match.length -1]
-    )
-  };
   return function(text) {
     return $sce.trustAsHtml(
-      text.toString().replace(/\W:(\w+):\W/im, insertIcon)
+      text.toString().replace(/\W:(\w+):\W/im, function(match, $1) {
+        return String.concat(
+          match[0],
+          '<span class="fontelico-emo-', $1, '" data-text="emo-', $1, '"/>',
+          match[match.length -1]
+        )
+      )
     )
   };
 };
