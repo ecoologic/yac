@@ -10,6 +10,10 @@ Yet another chat...
 * Bootstrap 3.1
 * LoDash 2.4
 
+## Open-source Contribution
+
+Please feel free to send a pull request, fork or get in touch.
+
 ## Working features
 
 * Login / logout
