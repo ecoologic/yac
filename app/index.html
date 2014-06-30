@@ -43,7 +43,11 @@
       </button>
     </section>
 
-    <article class='chat' ng-if='currentUser'>
+    <article class='unauthenticated' ng-if='!currentUser'>
+      <h2>No login &mdash; No Party</h2> {{currentUser}}
+    </article>
+
+    <article class='rooms' ng-if='currentUser'>
       <section ng-controller='MessagesCtrl' class='messages'>
         <div ng-repeat='(key, message) in messages'>
           <div ng-class="isCurrentUserMessage(message.senderUserKey) ? 'is-current-user-message' : 'isnt-current-user-message'"

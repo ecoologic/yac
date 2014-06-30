@@ -34,20 +34,20 @@ Please feel free to send a pull request, fork or get in touch.
 * Better icons
 * User autocomplete in new message http://ngmodules.org/modules/ngAutocomplete
 * Improve Firebase security roles
+* linemanjs
+* .new-message { position: fix }
+* footer with credits and help
 
 #### Ui-ideas
 
 * append new text to previous message unless other user interrupt
 * ?no delete/edit? except last message
-* .new-message { position: fix }
 * scroll down when your new message posted
 * many rooms in the same view
 * cli for navigation
-  - /+new_room # => creates a new room
-  - /=room_x     # => go to room_x
-  - /-old_room   # => UNSUBSCRIBE from room_x (default will be subscribed)
-
-
+  - `/+new_room # => creates a new room`
+  - `/=room_x   # => go to room_x`
+  - `/-old_room # => UNSUBSCRIBE from room_x (default will be subscribed)`
 
 ## Run the server (from `app/`)
 
