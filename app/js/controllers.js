@@ -17,7 +17,7 @@ controllers.MessagesCtrl = function($scope, Resource, User) {
     var message = $scope.messages[messageKey];
     if(!message.senderAvatarUrl) {
       User(message.senderUserKey).avatarUrl(function(snapshot) {
-        $scope.messages[messageKey].senderAvatarUrl = snapshot.val() || 'images/missing_avatar.png?';
+        $scope.messages[messageKey].senderAvatarUrl = snapshot.val() || 'img/missing_avatar.png?';
       });
     }
   };
