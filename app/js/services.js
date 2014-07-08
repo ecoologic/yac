@@ -11,11 +11,23 @@ services.Resource = function($firebase) {
 };
 
 services.User = function(Resource) {
-  return function(key) {
+  return function(args) {
+    var key = args.key;
     return {
       avatarUrl: function(callback) {
         var path = 'users/' + key + '/thirdPartyUserData/avatar_url';
         Resource.ref(path).on('value', callback);
+      }
+    };
+  };
+};
+
+services.Message = function(User) {
+  return function(args) {
+    var message = args.message;
+    return {
+      senderAvatarUrl: function(callback) {
+        User({ key: message.senderAvatarUrl }).avatarUrl(callback);
       }
     };
   };

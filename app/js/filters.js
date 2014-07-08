@@ -12,7 +12,7 @@ filters.iconize = function($sce) {
   return function(text) {
     return $sce.trustAsHtml(
       text.toString().replace(/\W:(\w+):\W/im, function(match, $1) {
-        return String.concat(
+        return ''.concat(
           match[0],
           '<span class="fontelico-emo-', $1, '" data-text="emo-', $1, '"/>',
           match[match.length -1]
@@ -24,6 +24,6 @@ filters.iconize = function($sce) {
 
 filters.cleanTime = function() {
   return function(timestamp) {
-    return timestamp.replace((new Date()).toLocaleDateString(), '');
+    return timestamp.replace(new Date().toLocaleDateString(), '');
   };
 };

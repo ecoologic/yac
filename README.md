@@ -35,8 +35,8 @@ Please feel free to send a pull request, fork or get in touch.
 * Group chats
 * User autocomplete in new message http://ngmodules.org/modules/ngAutocomplete
 * Smiles autocomplete in new message
-* .new-message { position: fix }
-* footer with credits and help
+* `.new-message { position: fix }`
+* Footer with credits and help
 * Better icons
 * Limit fetched messages
 * Improve Firebase security roles

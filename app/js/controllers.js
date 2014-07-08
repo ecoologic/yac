@@ -3,7 +3,7 @@ var controllers = {};
 
 controllers.AuthenticationCtrl = function($scope, Authentication, User) {
   $scope.$watch('currentUserKey', function(key) {
-    User(key).avatarUrl(function(snapshot) {
+    User({ key: key }).avatarUrl(function(snapshot) {
       $scope.avatarUrl = snapshot.val();
     });
   });
@@ -12,30 +12,23 @@ controllers.AuthenticationCtrl = function($scope, Authentication, User) {
   $scope.logout = Authentication.logout;
 };
 
-controllers.MessagesCtrl = function($scope, Resource, User) {
-  var setMessageSenderAvatarUrl = function(messageKey) {
-    var message = $scope.messages[messageKey];
-    if(!message.senderAvatarUrl) {
-      User(message.senderUserKey).avatarUrl(function(snapshot) {
-        $scope.messages[messageKey].senderAvatarUrl = snapshot.val() || 'img/missing_avatar.png?';
-      });
-    }
-  };
-
-  // assigns: $scope.messages[n].senderAvatarUrl
+controllers.MessagesCtrl = function($scope, Resource, Message) {
   $scope.$watchCollection('messages', function(newMessages, oldMessages) {
-    if(newMessages) {
-      _.each(newMessages.$getIndex(), function(messageKey) {
-        setMessageSenderAvatarUrl(messageKey);
+    if(!newMessages) return;
+    _.each(newMessages.$getIndex(), function(messageKey) {
+      var message = newMessages[messageKey];
+      if(message.senderAvatarUrl) return;
+      Message({ message: message }).senderAvatarUrl(function(snapshot) {
+        message.senderAvatarUrl = snapshot.val() || 'img/missing_avatar.png?';
       });
-    };
+    });
   });
 
   $scope.messages = Resource.messages;
 
   $scope.isCurrentUserMessage = function(messageUserKey) {
     return $scope.currentUserKey === messageUserKey;
-  }
+  };
 
   $scope.deleteable = function(senderUserKey) {
     return senderUserKey === $scope.currentUserKey;
@@ -43,13 +36,13 @@ controllers.MessagesCtrl = function($scope, Resource, User) {
 
   $scope.delete = function(key) {
     Resource.messages.$remove(key);
-  }
+  };
 };
 
 controllers.NewMessageCtrl = function($scope, Authentication, Resource) {
   $scope.create = function() {
     $scope.newMessage.senderUserKey = $scope.currentUserKey;
-    $scope.newMessage.createdAt = (new Date()).toLocaleString();
+    $scope.newMessage.createdAt = new Date().toLocaleString();
     Resource.messages.$add($scope.newMessage);
     $scope.newMessage = {};
   };
