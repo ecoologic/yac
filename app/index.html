@@ -46,7 +46,7 @@
     <h2>No login &mdash; No Party</h2>
   </article>
 
-  <article class='rooms' ng-if='currentUser'>
+  <article class='rooms' ng-if='currentUser' ng-controller='RoomsCtrl' ng-repeat='(roomKey, room) in rooms'>
     <section ng-controller='MessagesCtrl' class='messages'>
       <div ng-repeat='(key, message) in messages'>
         <div ng-class="isCurrentUserMessage(message.senderUserKey) ? 'is-current-user-message' : 'isnt-current-user-message'"
@@ -62,21 +62,21 @@
         <div class='message well well-sm' ng-bind-html='message.text | markdown | iconize'/>
       </div>
     </section>
-    <section ng-controller='NewMessageCtrl' class='new-message row'>
-      <form ng-submit='create()' name='newMessageForm' role='form' class='col-lg-6'>
-        <div class="input-group">
-          <label for='newMessageText' class='sr-only'>Have your say</label>
-          <input ng-model='newMessage.text' name='newMessageText' class='form-control'
-                 required minlength='1' autocomplete='off' autofocus
-                 placeholder="I'm **thinking** _that_... :thumbsup:"/>
-          <span class="input-group-btn">
-            <button ng-disabled='newMessageForm.$invalid' class='btn btn-primary'>
-              &raquo;
-            </button>
-          </span>
-        </div>
-      </form>
-    </section>
   </article>
+  <section ng-controller='NewMessageCtrl' class='new-message row'>
+    <form ng-submit='create()' name='newMessageForm' role='form' class='col-lg-6'>
+      <div class="input-group">
+        <label for='newMessageText' class='sr-only'>Have your say</label>
+        <input ng-model='newMessage.text' name='newMessageText' class='form-control'
+               required minlength='1' autocomplete='off' autofocus
+               placeholder="I'm **thinking** _that_... :thumbsup:"/>
+        <span class="input-group-btn">
+          <button ng-disabled='newMessageForm.$invalid' class='btn btn-primary'>
+            &raquo;
+          </button>
+        </span>
+      </div>
+    </form>
+  </section>
 </body>
 </html>

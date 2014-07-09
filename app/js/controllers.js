@@ -12,6 +12,10 @@ controllers.AuthenticationCtrl = function($scope, Authentication, User) {
   $scope.logout = Authentication.logout;
 };
 
+controllers.RoomsCtrl = function($scope, Resource) {
+  $scope.rooms = Resource.rooms;
+};
+
 controllers.MessagesCtrl = function($scope, Resource, Message) {
   $scope.$watchCollection('messages', function(newMessages, oldMessages) {
     if(!newMessages) return;
@@ -24,7 +28,7 @@ controllers.MessagesCtrl = function($scope, Resource, Message) {
     });
   });
 
-  $scope.messages = Resource.messages;
+  $scope.messages = Resource.messages($scope.roomKey);
 
   $scope.isCurrentUserMessage = function(messageUserKey) {
     return $scope.currentUserKey === messageUserKey;
@@ -35,15 +39,16 @@ controllers.MessagesCtrl = function($scope, Resource, Message) {
   };
 
   $scope.delete = function(key) {
-    Resource.messages.$remove(key);
+    Resource.messages(roomKey).$remove(key);
   };
 };
 
 controllers.NewMessageCtrl = function($scope, Authentication, Resource) {
+  $scope.activeRoomKey = 'hall';
   $scope.create = function() {
     $scope.newMessage.senderUserKey = $scope.currentUserKey;
     $scope.newMessage.createdAt = new Date().toLocaleString();
-    Resource.messages.$add($scope.newMessage);
+    Resource.messages($scope.activeRoomKey).$add($scope.newMessage);
     $scope.newMessage = {};
   };
 };
