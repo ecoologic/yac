@@ -34,8 +34,8 @@ controllers.MessagesCtrl = function($scope, Resource, Message) {
     return $scope.currentUserKey === messageUserKey;
   };
 
-  $scope.deleteable = function(senderUserKey) {
-    return senderUserKey === $scope.currentUserKey;
+  $scope.deleteable = function(senderKey) {
+    return senderKey === $scope.currentUserKey;
   };
 
   $scope.delete = function(key) {
@@ -46,7 +46,7 @@ controllers.MessagesCtrl = function($scope, Resource, Message) {
 controllers.NewMessageCtrl = function($scope, Authentication, Resource) {
   $scope.activeRoomKey = 'hall';
   $scope.create = function() {
-    $scope.newMessage.senderUserKey = $scope.currentUserKey;
+    $scope.newMessage.senderKey = $scope.currentUserKey;
     $scope.newMessage.createdAt = new Date().toLocaleString();
     Resource.messages($scope.activeRoomKey).$add($scope.newMessage);
     $scope.newMessage = {};
