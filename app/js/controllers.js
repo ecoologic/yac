@@ -30,8 +30,8 @@ controllers.MessagesCtrl = function($scope, Resource, Message) {
 
   $scope.messages = Resource.messages($scope.roomKey);
 
-  $scope.isCurrentUserMessage = function(messageUserKey) {
-    return $scope.currentUserKey === messageUserKey;
+  $scope.isCurrentUserMessage = function(userKey) {
+    return $scope.currentUserKey === userKey;
   };
 
   $scope.deleteable = function(senderKey) {
