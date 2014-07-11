@@ -28,7 +28,7 @@ controllers.MessagesCtrl = function($scope, Resource, Message) {
     });
   });
 
-  $scope.messages = Resource.messages($scope.roomKey);
+  $scope.messages = Resource.messages($scope.roomKey); // TODO? access $scope.room from ng-repeat?
 
   $scope.isCurrentUserMessage = function(userKey) {
     return $scope.currentUserKey === userKey;
@@ -45,10 +45,24 @@ controllers.MessagesCtrl = function($scope, Resource, Message) {
 
 controllers.NewMessageCtrl = function($scope, Authentication, Resource) {
   $scope.activeRoomKey = 'hall';
-  $scope.create = function() {
+
+  // eg text: `/+newroom let's move the conversation here`
+  var setActiveRoom = function() {
+    $scope.newMessage.text.replace(/^\/\+(\w+)\W/, function(match, $1) {
+      $scope.activeRoomKey = $1;
+      return '';
+    });
+  };
+
+  var create = function() {
     $scope.newMessage.senderKey = $scope.currentUserKey;
     $scope.newMessage.createdAt = new Date().toLocaleString();
     Resource.messages($scope.activeRoomKey).$add($scope.newMessage);
     $scope.newMessage = {};
+  };
+
+  $scope.parse = function() {
+    setActiveRoom();
+    create();
   };
 };

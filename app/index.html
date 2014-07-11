@@ -64,7 +64,7 @@
     </section>
   </article>
   <section ng-controller='NewMessageCtrl' class='new-message row'>
-    <form ng-submit='create()' name='newMessageForm' role='form' class='col-lg-6'>
+    <form ng-submit='parse()' name='newMessageForm' role='form' class='col-lg-6'>
       <div class="input-group">
         <label for='newMessageText' class='sr-only'>Have your say</label>
         <input ng-model='newMessage.text' name='newMessageText' class='form-control'
