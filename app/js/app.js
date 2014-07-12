@@ -12,6 +12,7 @@ var dependencies = [ //////////////////////////////////////////////////////////
 ];
 
 var app = angular.module('app', dependencies) /////////////////////////////////
+                 .factory(factories)
                  .controller(controllers)
                  .filter(filters)
                  .service(services)
