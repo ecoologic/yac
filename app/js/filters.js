@@ -16,9 +16,9 @@ filters.iconize = function($sce) {
           match[0],
           '<span class="fontelico-emo-', $1, '" data-text="emo-', $1, '"/>',
           match[match.length -1]
-        )
+        );
       })
-    )
+    );
   };
 };
 

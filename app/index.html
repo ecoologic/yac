@@ -46,20 +46,22 @@
     <h2>No login &mdash; No Party</h2>
   </article>
 
-  <article class='rooms' ng-if='currentUser' ng-controller='RoomsCtrl' ng-repeat='(roomKey, room) in rooms'>
-    <section ng-controller='MessagesCtrl' class='messages'>
-      <div ng-repeat='(key, message) in messages'>
-        <div ng-class="isCurrentUserMessage(message.senderKey) ? 'is-current-user-message' : 'isnt-current-user-message'"
-             class='meta'>
-          <img ng-src='{{ message.senderAvatarUrl }}s=24' class='avatar'>
-          <span class='text'>
-            <time>{{ message.createdAt | cleanTime }}</time> &mdash;
-            <b class='sender'>{{ message.senderKey }}</b>:
-          </span>
-          <button ng-show='deleteable(message.senderKey)' ng-click='delete(key)'
-                  class='close' aria-hidden='true'>&times;</button>
+  <article ng-if='currentUser' ng-controller='RoomsCtrl' class='rooms'>
+    <section ng-repeat='(roomKey, room) in rooms'>
+      <div ng-controller='MessagesCtrl' class='messages'>
+        <div ng-repeat='(key, message) in messages'>
+          <div ng-class="isCurrentUserMessage(message.senderKey) ? 'is-current-user-message' : 'isnt-current-user-message'"
+               class='meta'>
+            <img ng-src='{{ message.senderAvatarUrl }}s=24' class='avatar'>
+            <span class='text'>
+              <time>{{ message.createdAt | cleanTime }}</time> &mdash;
+              <b class='sender'>{{ message.senderKey }}</b>:
+            </span>
+            <button ng-show='deleteable(message.senderKey)' ng-click='delete(key)'
+                    class='close' aria-hidden='true'>&times;</button>
+          </div>
+          <div class='message well well-sm' ng-bind-html='message.text | markdown | iconize'/>
         </div>
-        <div class='message well well-sm' ng-bind-html='message.text | markdown | iconize'/>
       </div>
     </section>
   </article>
