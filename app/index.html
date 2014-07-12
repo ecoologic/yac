@@ -48,6 +48,9 @@
 
   <article ng-if='currentUser' ng-controller='RoomsCtrl' class='rooms'>
     <section ng-repeat='(roomKey, room) in rooms'>
+      <header>
+        <h1>{{ roomKey }}</h1>
+      </header>
       <div ng-controller='MessagesCtrl' class='messages'>
         <div ng-repeat='(key, message) in messages'>
           <div ng-class="isCurrentUserMessage(message.senderKey) ? 'is-current-user-message' : 'isnt-current-user-message'"

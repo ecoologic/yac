@@ -46,9 +46,9 @@ controllers.MessagesCtrl = function($scope, Resource, Message) {
 controllers.NewMessageCtrl = function($scope, Authentication, Resource) {
   $scope.activeRoomKey = 'hall';
 
-  // eg text: `/+newroom let's move the conversation here`
+  // eg text: `/newroom let's move the conversation here`
   var setActiveRoom = function() {
-    $scope.newMessage.text.replace(/^\/\+(\w+)\W/, function(match, $1) {
+    $scope.newMessage.text = $scope.newMessage.text.replace(/^\/(\w+)\W/, function(match, $1) {
       $scope.activeRoomKey = $1;
       return '';
     });
