@@ -12,8 +12,8 @@ controllers.AuthenticationCtrl = function($scope, Authentication, User) {
   $scope.logout = Authentication.logout;
 };
 
-controllers.RoomsCtrl = function($scope, Resource) {
-  $scope.activeRoomKey = 'hall';
+controllers.RoomsCtrl = function($scope, Resource, ActiveRoom) {
+  ActiveRoom.key = 'hall';
   $scope.rooms = Resource.rooms;
 };
 
@@ -44,11 +44,11 @@ controllers.MessagesCtrl = function($scope, Resource, Message) {
   };
 };
 
-controllers.NewMessageCtrl = function($scope, Authentication, Resource) {
+controllers.NewMessageCtrl = function($scope, Authentication, Resource, ActiveRoom) {
   // eg text: `/newroom let's move the conversation here`
   var setActiveRoom = function() {
     $scope.newMessage.text = $scope.newMessage.text.replace(/^\/(\w+)\W?/, function(match, $1) {
-      $scope.activeRoomKey = $1;
+      ActiveRoom.key = $1;
       return '';
     });
   };
@@ -57,7 +57,7 @@ controllers.NewMessageCtrl = function($scope, Authentication, Resource) {
     if(!$scope.newMessage.text.trim()) return;
     $scope.newMessage.senderKey = $scope.currentUserKey;
     $scope.newMessage.createdAt = new Date().toLocaleString();
-    Resource.messages($scope.activeRoomKey).$add($scope.newMessage);
+    Resource.messages(ActiveRoom.key).$add($scope.newMessage);
     $scope.newMessage = {};
   };
 

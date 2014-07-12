@@ -48,11 +48,11 @@
   </article>
 
   <article ng-if='currentUser' ng-controller='RoomsCtrl' class='rooms'>
-    RoomsCtrl |{{activeRoomkey}}| {{'hall' === activeRoomKey}}
+    RoomsCtrl |{{ActiveRoom.key}}| {{'hall' === ActiveRoom.key}}
     <section ng-repeat='(roomKey, room) in rooms' class='room'>
       <header>
-        <h1 ng-class="roomKey === activeRoomKey ? 'active' : 'inactive'">
-          {{ roomKey }} / {{roomKey === activeRoomKey}}
+        <h1 ng-class="roomKey === ActiveRoom.key ? 'active' : 'inactive'">
+          {{ roomKey }} / {{roomKey === ActiveRoom.key}}
         </h1>
       </header>
       <div ng-controller='MessagesCtrl' class='messages'>
@@ -73,7 +73,7 @@
     </section>
 
     <section ng-controller='NewMessageCtrl' class='new-message row'>
-      NewMessageCtrl |{{activeRoomkey}}| {{'hall' === activeRoomKey}}
+      NewMessageCtrl |{{ActiveRoom.key}}| {{'hall' === ActiveRoom.key}}
       <form ng-submit='parse()' name='newMessageForm' role='form' class='col-lg-6'>
         <div class="input-group">
           <label for='newMessageText' class='sr-only'>Have your say</label>
