@@ -36,6 +36,7 @@ services.Message = function(User) {
   };
 };
 
+// TODO? removing rootscope by using just a factory?
 services.Authentication = function($rootScope, $cookieStore, $firebaseSimpleLogin, Resource) {
   var setCurrentUser = function(key, user) {
     $cookieStore.put('session', { currentUserKey: key });

@@ -18,6 +18,7 @@ controllers.RoomsCtrl = function($scope, Resource, ActiveRoom) {
 };
 
 controllers.MessagesCtrl = function($scope, Resource, Message) {
+  // TODO? can we automate this??
   $scope.$watchCollection('messages', function(newMessages, oldMessages) {
     if(!newMessages) return;
     _.each(newMessages.$getIndex(), function(messageKey) {

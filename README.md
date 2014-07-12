@@ -1,4 +1,4 @@
-yac [(by erikcoologic)](https://github.com/ecoologic)
+yac [(by erikecoologic)](https://github.com/ecoologic)
 ===
 
 Yet another chat...
@@ -32,7 +32,9 @@ Please feel free to send a pull request, fork or get in touch.
 
 ### Todo
 
-* Group chats
+* Different Rooms
+* Unsubscribe from a room
+* Private rooms
 * User autocomplete in new message http://ngmodules.org/modules/ngAutocomplete
 * Smiles autocomplete in new message
 * `.new-message { position: fix }`
@@ -49,6 +51,5 @@ Please feel free to send a pull request, fork or get in touch.
 * no delete/edit except last message
 * many rooms in the same view
 * cli for room navigation
-  - `/+new_room # => creates a new room`
-  - `/=room_x   # => go to room_x`
+  - `/new_room # => switch to that room (creating it if needed)`
   - `/-old_room # => UNSUBSCRIBE from room_x (default will be subscribed)`
