@@ -13,6 +13,7 @@ controllers.AuthenticationCtrl = function($scope, Authentication, User) {
 };
 
 controllers.RoomsCtrl = function($scope, Resource) {
+  $scope.activeRoomKey = 'hall';
   $scope.rooms = Resource.rooms;
 };
 
@@ -44,17 +45,16 @@ controllers.MessagesCtrl = function($scope, Resource, Message) {
 };
 
 controllers.NewMessageCtrl = function($scope, Authentication, Resource) {
-  $scope.activeRoomKey = 'hall';
-
   // eg text: `/newroom let's move the conversation here`
   var setActiveRoom = function() {
-    $scope.newMessage.text = $scope.newMessage.text.replace(/^\/(\w+)\W/, function(match, $1) {
+    $scope.newMessage.text = $scope.newMessage.text.replace(/^\/(\w+)\W?/, function(match, $1) {
       $scope.activeRoomKey = $1;
       return '';
     });
   };
 
   var create = function() {
+    if(!$scope.newMessage.text.trim()) return;
     $scope.newMessage.senderKey = $scope.currentUserKey;
     $scope.newMessage.createdAt = new Date().toLocaleString();
     Resource.messages($scope.activeRoomKey).$add($scope.newMessage);

@@ -47,9 +47,12 @@
   </article>
 
   <article ng-if='currentUser' ng-controller='RoomsCtrl' class='rooms'>
-    <section ng-repeat='(roomKey, room) in rooms'>
+    RoomsCtrl |{{activeRoomkey}}| {{'hall' === activeRoomKey}}
+    <section ng-repeat='(roomKey, room) in rooms' class='room'>
       <header>
-        <h1>{{ roomKey }}</h1>
+        <h1 ng-class="roomKey === activeRoomKey ? 'active' : 'inactive'">
+          {{ roomKey }} / {{roomKey === activeRoomKey}}
+        </h1>
       </header>
       <div ng-controller='MessagesCtrl' class='messages'>
         <div ng-repeat='(key, message) in messages'>
@@ -67,21 +70,23 @@
         </div>
       </div>
     </section>
+
+    <section ng-controller='NewMessageCtrl' class='new-message row'>
+      NewMessageCtrl |{{activeRoomkey}}| {{'hall' === activeRoomKey}}
+      <form ng-submit='parse()' name='newMessageForm' role='form' class='col-lg-6'>
+        <div class="input-group">
+          <label for='newMessageText' class='sr-only'>Have your say</label>
+          <input ng-model='newMessage.text' name='newMessageText' class='form-control'
+                 required minlength='1' autocomplete='off' autofocus
+                 placeholder="I'm **thinking** _that_... :thumbsup:"/>
+          <span class="input-group-btn">
+            <button ng-disabled='newMessageForm.$invalid' class='btn btn-primary'>
+              &raquo;
+            </button>
+          </span>
+        </div>
+      </form>
+    </section>
   </article>
-  <section ng-controller='NewMessageCtrl' class='new-message row'>
-    <form ng-submit='parse()' name='newMessageForm' role='form' class='col-lg-6'>
-      <div class="input-group">
-        <label for='newMessageText' class='sr-only'>Have your say</label>
-        <input ng-model='newMessage.text' name='newMessageText' class='form-control'
-               required minlength='1' autocomplete='off' autofocus
-               placeholder="I'm **thinking** _that_... :thumbsup:"/>
-        <span class="input-group-btn">
-          <button ng-disabled='newMessageForm.$invalid' class='btn btn-primary'>
-            &raquo;
-          </button>
-        </span>
-      </div>
-    </form>
-  </section>
 </body>
 </html>

@@ -25,6 +25,11 @@ html body {
   margin-left: 1em;
 }
 
+/* Rooms */
+.rooms .room .active {
+  color: white;
+}
+
 /* Messages */
 .messages .meta {
   margin-bottom: .2em;
