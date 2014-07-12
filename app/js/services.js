@@ -30,7 +30,7 @@ services.Message = function(User) {
     var message = args.message;
     return {
       senderAvatarUrl: function(callback) {
-        User({ key: message.senderAvatarUrl }).avatarUrl(callback);
+        User({ key: message.senderKey }).avatarUrl(callback);
       }
     };
   };
