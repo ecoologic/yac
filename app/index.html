@@ -50,13 +50,13 @@
   <article ng-if='currentUser' ng-controller='RoomsCtrl' class='rooms'>
     <section ng-repeat='(roomKey, room) in rooms' class='room'>
       <header>
-        <h1 ng-class="roomKey === activeRoomKey ? 'active' : 'inactive'">
+        <h1 ng-class="{ current: roomKey === currentRoomKey }">
           {{ roomKey }}
         </h1>
       </header>
       <div ng-controller='MessagesCtrl' class='messages'>
         <div ng-repeat='(key, message) in messages'>
-          <div ng-class="{'isnt-current-user-message': !isCurrentUserMessage(message.senderKey)}"
+          <div ng-class="{ 'isnt-current-user-message': !isCurrentUserMessage(message.senderKey) }"
                class='meta'>
             <img ng-src='{{ message.senderAvatarUrl }}s=24' class='avatar'>
             <span class='text'>
@@ -77,7 +77,7 @@
           <label for='newMessageText' class='sr-only'>Have your say</label>
           <input ng-model='newMessage.text' name='newMessageText' class='form-control'
                  required minlength='1' autocomplete='off' autofocus
-                 placeholder="[{{ activeRoomKey }}] I'm **thinking** _that_... :thumbsup:"/>
+                 placeholder="[{{ currentRoomKey }}] I'm **thinking** _that_... :thumbsup:"/>
           <span class="input-group-btn">
             <button ng-disabled='newMessageForm.$invalid' class='btn btn-primary'>
               &raquo;

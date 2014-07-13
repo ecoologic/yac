@@ -1,7 +1,7 @@
 'user strict';
 factories = {};
 
-factories.ActiveRoom = function () { // TODO? rename to currentRoom?
+factories.CurrentRoom = function () {
   return { key: null };
 };
 

@@ -26,7 +26,7 @@ html body {
 }
 
 /* Rooms */
-.rooms .room .active {
+.rooms .room .current {
   color: white;
 }
 
