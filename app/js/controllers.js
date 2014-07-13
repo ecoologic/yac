@@ -13,23 +13,12 @@ controllers.AuthenticationCtrl = function($scope, Authentication, User) {
 };
 
 controllers.RoomsCtrl = function($scope, Resource, ActiveRoom) {
-  ActiveRoom.key = 'hall';
+  $scope.activeRoomKey = ActiveRoom.key = 'hall';
   $scope.rooms = Resource.rooms;
 };
 
 controllers.MessagesCtrl = function($scope, Resource, Message) {
-  // TODO? can we automate this??
-  $scope.$watchCollection('messages', function(newMessages, oldMessages) {
-    if(!newMessages) return;
-    _.each(newMessages.$getIndex(), function(messageKey) {
-      var message = newMessages[messageKey];
-      if(message.senderAvatarUrl) return;
-      Message({ message: message }).senderAvatarUrl(function(snapshot) {
-        message.senderAvatarUrl = snapshot.val() || 'img/missing_avatar.png?';
-      });
-    });
-  });
-
+  $scope.$watchCollection('messages', Message({}).addNewSenderAvatarUrls);
   $scope.messages = Resource.messages($scope.roomKey); // TODO? access $scope.room from ng-repeat?
 
   $scope.isCurrentUserMessage = function(userKey) {

@@ -32,7 +32,9 @@ Please feel free to send a pull request, fork or get in touch.
 
 ### Todo
 
-* Different Rooms
+* Different Rooms (WIP: keep active room updated)
+* Active room at the bottom
+* Animation for latest message
 * Unsubscribe from a room
 * Private rooms
 * User autocomplete in new message http://ngmodules.org/modules/ngAutocomplete

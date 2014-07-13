@@ -48,16 +48,15 @@
   </article>
 
   <article ng-if='currentUser' ng-controller='RoomsCtrl' class='rooms'>
-    RoomsCtrl |{{ActiveRoom.key}}| {{'hall' === ActiveRoom.key}}
     <section ng-repeat='(roomKey, room) in rooms' class='room'>
       <header>
-        <h1 ng-class="roomKey === ActiveRoom.key ? 'active' : 'inactive'">
-          {{ roomKey }} / {{roomKey === ActiveRoom.key}}
+        <h1 ng-class="roomKey === activeRoomKey ? 'active' : 'inactive'">
+          {{ roomKey }}
         </h1>
       </header>
       <div ng-controller='MessagesCtrl' class='messages'>
         <div ng-repeat='(key, message) in messages'>
-          <div ng-class="isCurrentUserMessage(message.senderKey) ? 'is-current-user-message' : 'isnt-current-user-message'"
+          <div ng-class="{'isnt-current-user-message': !isCurrentUserMessage(message.senderKey)}"
                class='meta'>
             <img ng-src='{{ message.senderAvatarUrl }}s=24' class='avatar'>
             <span class='text'>
@@ -73,13 +72,12 @@
     </section>
 
     <section ng-controller='NewMessageCtrl' class='new-message row'>
-      NewMessageCtrl |{{ActiveRoom.key}}| {{'hall' === ActiveRoom.key}}
       <form ng-submit='parse()' name='newMessageForm' role='form' class='col-lg-6'>
         <div class="input-group">
           <label for='newMessageText' class='sr-only'>Have your say</label>
           <input ng-model='newMessage.text' name='newMessageText' class='form-control'
                  required minlength='1' autocomplete='off' autofocus
-                 placeholder="I'm **thinking** _that_... :thumbsup:"/>
+                 placeholder="[{{ activeRoomKey }}] I'm **thinking** _that_... :thumbsup:"/>
           <span class="input-group-btn">
             <button ng-disabled='newMessageForm.$invalid' class='btn btn-primary'>
               &raquo;
