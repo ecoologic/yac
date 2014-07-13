@@ -22,10 +22,6 @@ controllers.MessagesCtrl = function($scope, Resource, Messages) {
   $scope.$watchCollection('messages', Messages.addNewSenderAvatarUrls);
   $scope.messages = Resource.messages($scope.roomKey); // TODO? access $scope.room from ng-repeat?
 
-  $scope.isCurrentUserMessage = function(userKey) {
-    return $scope.currentUserKey === userKey;
-  };
-
   $scope.deleteable = function(senderKey) {
     return senderKey === $scope.currentUserKey;
   };

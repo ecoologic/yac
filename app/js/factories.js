@@ -10,7 +10,7 @@ factories.Authentication = function($rootScope, $cookieStore, $firebaseSimpleLog
     $cookieStore.put('session', { currentUserKey: key });
     $rootScope.currentUserKey = key;
     $rootScope.currentUser = user || (key ? Resource.users.$child(key) : null);
-    console.log('Authentication#setCurrentUser', key, $rootScope.currentUser);
+    console.log('Authentication#setCurrentUser', key);
   };
 
   var session = $cookieStore.get('session');
@@ -21,7 +21,7 @@ factories.Authentication = function($rootScope, $cookieStore, $firebaseSimpleLog
     login: function() {
       var auth = $firebaseSimpleLogin(Resource.ref(''));
       return auth.$login('github').then(function(user) {
-        console.log('Authentication#login', user);
+        console.log('Authentication#login', user.username);
         setCurrentUser(user.username, user);
         Resource.users[user.username] = user;
         Resource.users.$save(user.username);
