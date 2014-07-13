@@ -21,15 +21,7 @@ Please feel free to send a pull request, fork or get in touch.
 
 ## Working features
 
-* Login / logout
-* Store user in session
-* Some Firebase security roles
-* Show user avatar
-* Store messages
-* Delete messages (own only)
-* Message markdown
-* Smiles in messages (http://fontello.com/)
-* Different Rooms
+See the [`CHANGELOG.md`](/CHANGELOG.md)
 
 ### Todo
 
@@ -51,7 +43,5 @@ Please feel free to send a pull request, fork or get in touch.
 
 * append new text to previous message unless other user interrupt
 * no delete/edit except last message
-* many rooms in the same view
 * cli for room navigation
-  - `/new_room # => switch to that room (creating it if needed)`
   - `/-old_room # => UNSUBSCRIBE from room_x (default will be subscribed)`
