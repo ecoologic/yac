@@ -2,7 +2,7 @@
 factories = {};
 
 factories.CurrentRoom = function () {
-  return { key: null };
+  return { key: 'hall' };
 };
 
 factories.Authentication = function($rootScope, $cookieStore, $firebaseSimpleLogin, Resource) {

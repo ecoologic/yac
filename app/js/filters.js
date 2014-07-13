@@ -27,3 +27,10 @@ filters.cleanTime = function() {
     return timestamp.replace(new Date().toLocaleDateString(), '');
   };
 };
+
+filters.debug = function() {
+  return function(args) {
+    debugger;
+    return args;
+  };
+};
