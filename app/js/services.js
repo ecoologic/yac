@@ -17,7 +17,6 @@ services.User = function(Resource) {
   return function(args) {
     var key = args.key;
     return {
-      // collection methods
       // key methods: User({ key: x }).avatarUrl(y)
       avatarUrl: function(callback) {
         var path = 'users/' + key + '/thirdPartyUserData/avatar_url';
@@ -29,28 +28,13 @@ services.User = function(Resource) {
 };
 
 services.Message = function(User) {
-  var senderAvatarUrl = function(senderKey, callback) {
-    User({ key: senderKey }).avatarUrl(callback);
-  };
-
   return function(args) {
     var message = args.message;
     return {
-      // collection methods: Message({}).addNewSenderAvatarUrls(xs)
-      addNewSenderAvatarUrls: function(newMessages) {
-        if(!newMessages) return;
-        _.each(newMessages.$getIndex(), function(messageKey) {
-          var message = newMessages[messageKey];
-          if(message.senderAvatarUrl) return;
-          senderAvatarUrl(message.senderKey, function(snapshot) {
-            message.senderAvatarUrl = snapshot.val() || 'img/missing_avatar.png?';
-          });
-        });
-      },
       // key methods
       // value methods: Message({ message: x }).senderAvatarUrl(y)
       senderAvatarUrl: function(callback) {
-        senderAvatarUrl(message.senderKey, callback);
+        User({ key: message.senderKey }).avatarUrl(callback);
       }
     };
   };

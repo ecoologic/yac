@@ -17,8 +17,8 @@ controllers.RoomsCtrl = function($scope, Resource, ActiveRoom) {
   $scope.rooms = Resource.rooms;
 };
 
-controllers.MessagesCtrl = function($scope, Resource, Message) {
-  $scope.$watchCollection('messages', Message({}).addNewSenderAvatarUrls);
+controllers.MessagesCtrl = function($scope, Resource, Messages) {
+  $scope.$watchCollection('messages', Messages.addNewSenderAvatarUrls);
   $scope.messages = Resource.messages($scope.roomKey); // TODO? access $scope.room from ng-repeat?
 
   $scope.isCurrentUserMessage = function(userKey) {

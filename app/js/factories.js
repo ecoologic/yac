@@ -30,3 +30,18 @@ factories.Authentication = function($rootScope, $cookieStore, $firebaseSimpleLog
     logout: function() { setCurrentUser(null); }
   };
 };
+
+factories.Messages = function(Message) {
+  return {
+    addNewSenderAvatarUrls: function(newMessages) {
+      if(!newMessages) return;
+      _.each(newMessages.$getIndex(), function(messageKey) {
+        var message = newMessages[messageKey];
+        if(message.senderAvatarUrl) return;
+        Message({ message: message }).senderAvatarUrl(function(snapshot) {
+          message.senderAvatarUrl = snapshot.val() || 'img/missing_avatar.png?';
+        });
+      });
+    },
+  };
+};
