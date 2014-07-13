@@ -13,7 +13,8 @@ controllers.AuthenticationCtrl = function($scope, Authentication, User) {
 };
 
 controllers.RoomsCtrl = function($scope, Resource, CurrentRoom) {
-  $scope.currentRoomKey = CurrentRoom.key = 'hall';
+  $scope.currentRoom = CurrentRoom;
+  CurrentRoom.key = 'hall';
   $scope.rooms = Resource.rooms;
 };
 
