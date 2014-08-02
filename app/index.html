@@ -77,7 +77,7 @@
           <label for='newMessageText' class='sr-only'>Have your say</label>
           <input ng-model='newMessage.text' name='newMessageText' class='form-control'
                  required minlength='1' autocomplete='off' autofocus
-                 placeholder="[{{ currentRoom.key }}] I'm **thinking** _that_... :thumbsup:"/>
+                 placeholder="{{ currentRoom.key }}/ I'm **thinking** _that_... :thumbsup:"/>
           <span class="input-group-btn">
             <button ng-disabled='newMessageForm.$invalid' class='btn btn-primary'>
               &raquo;

@@ -8,7 +8,7 @@ services.Resource = function($firebase) {
     users:    $firebase(new Firebase(firebaseUrl + 'users')),
     rooms:    $firebase(new Firebase(firebaseUrl + 'rooms')),
     messages: function(roomKey) {
-      return $firebase(new Firebase(firebaseUrl + 'rooms/' + roomKey + '/messages'));
+      return $firebase(new Firebase(firebaseUrl + 'messages/' + roomKey));
     }
   };
 };
