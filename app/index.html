@@ -33,7 +33,7 @@
   <section ng-controller='AuthenticationCtrl' class='authentication'>
     <button ng-show='currentUser' ng-click='logout()' class='btn btn-primary btn-xs'
             title="Log Out">
-      <img ng-src='{{ avatarUrl }}s=14'>
+      <img ng-src='{{ avatarUrl }}&s=14'>
       {{ currentUser.username }}
       <span class='glyphicon glyphicon-log-out'></span>
     </button>
@@ -58,7 +58,7 @@
         <div ng-repeat='(key, message) in messages'>
           <div ng-class="{ 'isnt-current-user-message': currentUserKey !== message.senderKey }"
                class='meta'>
-            <img ng-src='{{ message.senderAvatarUrl }}s=24' class='avatar'>
+            <img ng-src='{{ message.senderAvatarUrl }}&s=24' class='avatar'>
             <span class='text'>
               <time>{{ message.createdAt | cleanTime }}</time> &mdash;
               <b class='sender'>{{ message.senderKey }}</b>:
