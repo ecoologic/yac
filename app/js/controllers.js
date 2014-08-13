@@ -12,9 +12,11 @@ controllers.AuthenticationCtrl = function($scope, Authentication, User) {
   $scope.logout = Authentication.logout;
 };
 
-controllers.RoomsCtrl = function($scope, Resource, CurrentRoom) {
+controllers.RoomsCtrl = function($scope, Rooms, CurrentRoom) {
   $scope.currentRoom = CurrentRoom;
-  $scope.rooms = Resource.rooms;
+  Rooms.orderedKeys(function(roomKeys) {
+    $scope.roomKeys = roomKeys;
+  })
 };
 
 controllers.MessagesCtrl = function($scope, Resource, Messages) {

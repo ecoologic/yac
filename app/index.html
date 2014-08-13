@@ -48,7 +48,7 @@
   </article>
 
   <article ng-if='currentUser' ng-controller='RoomsCtrl' class='rooms'>
-    <section ng-repeat='(roomKey, room) in rooms' class='room'>
+    <section ng-repeat='roomKey in roomKeys' class='room'>
       <header>
         <h1 ng-class="{ current: roomKey === currentRoom.key }">
           {{ roomKey }}
