@@ -66,3 +66,18 @@ factories.GithubAvatar = function(Resource) {
     };
   };
 }
+
+factories.H = function(Resource) { // H -> Helpers
+  return function(args) {
+    var items = args.items;
+
+    return {
+      forEveryNewCollectionItem: function(callback) {
+        if(!items) return;
+        _.each(items.$getIndex(), function(key) {
+          callback(items[key], key);
+        });
+      }
+    };
+  };
+}

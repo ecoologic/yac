@@ -25,13 +25,9 @@ controllers.RoomsCtrl = function($scope, Resource, CurrentRoom) {
   $scope.$watchCollection('rooms', sort);
 };
 
-controllers.MessagesCtrl = function($scope, Resource, GithubAvatar) {
+controllers.MessagesCtrl = function($scope, Resource, H, GithubAvatar) {
   var addNewSenderAvatarUrls = function(newMessages) {
-    if(!newMessages) return;
-    _.each(newMessages.$getIndex(), function(messageKey) {
-      var message = newMessages[messageKey];
-      if(message.senderAvatarUrl) return;
-
+    H({ items: newMessages }).forEveryNewCollectionItem(function(message) {
       GithubAvatar({ userKey: message.senderKey }).url(function(url) {
         message.senderAvatarUrl = url;
       });
