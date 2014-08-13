@@ -56,8 +56,7 @@
       </header>
       <div ng-controller='MessagesCtrl' class='messages'>
         <div ng-repeat='(key, message) in messages'>
-          <div ng-class="{ 'isnt-current-user-message': currentUserKey !== message.senderKey }"
-               class='meta'>
+          <div ng-class="{ 'current-user-message': currentUserKey === message.senderKey }" class='meta'>
             <img ng-src='{{ message.senderAvatarUrl }}' class='avatar'>
             <span class='text'>
               <time>{{ message.createdAt | cleanTime }}</time> &mdash;

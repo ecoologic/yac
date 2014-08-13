@@ -43,8 +43,8 @@ html body {
   vertical-align: bottom;
 }
 
-.messages .isnt-current-user-message .sender {
-  color: grey;
+.messages .current-user-message .sender {
+  color: gray;
 }
 
 .messages .meta .close {
