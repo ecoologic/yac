@@ -43,6 +43,7 @@ controllers.NewMessageCtrl = function($scope, Authentication, Resource, CurrentR
     if(!$scope.newMessage.text.trim()) return;
     $scope.newMessage.senderKey = $scope.currentUserKey;
     $scope.newMessage.createdAt = new Date().toLocaleString();
+    Resource.room(CurrentRoom.key).$set({ lastMessageAt: $scope.newMessage.createdAt });
     Resource.messages(CurrentRoom.key).$add($scope.newMessage);
     $scope.newMessage = {};
   };
