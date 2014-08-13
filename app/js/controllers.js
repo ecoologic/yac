@@ -1,13 +1,14 @@
 'use strict';
 var controllers = {};
 
-controllers.AuthenticationCtrl = function($scope, Authentication, User) {
-  $scope.$watch('currentUserKey', function(key) {
-    User({ key: key }).avatarUrl(function(snapshot) {
-      var url = snapshot.val();
-      if(url) $scope.avatarUrl = url + '&s=14';
+controllers.AuthenticationCtrl = function($scope, Authentication, GithubAvatar) {
+  var addAvatarUrl = function(key) {
+    GithubAvatar({ userKey: key, size: 14 }).url(function(url) {
+      $scope.avatarUrl = url;
     });
-  });
+  };
+
+  $scope.$watch('currentUserKey', addAvatarUrl);
 
   $scope.login  = Authentication.login;
   $scope.logout = Authentication.logout;
@@ -24,8 +25,20 @@ controllers.RoomsCtrl = function($scope, Resource, CurrentRoom) {
   $scope.$watchCollection('rooms', sort);
 };
 
-controllers.MessagesCtrl = function($scope, Resource, Messages) {
-  $scope.$watchCollection('messages', Messages.addNewSenderAvatarUrls);
+controllers.MessagesCtrl = function($scope, Resource, GithubAvatar) {
+  var addNewSenderAvatarUrls = function(newMessages) {
+    if(!newMessages) return;
+    _.each(newMessages.$getIndex(), function(messageKey) {
+      var message = newMessages[messageKey];
+      if(message.senderAvatarUrl) return;
+
+      GithubAvatar({ userKey: message.senderKey }).url(function(url) {
+        message.senderAvatarUrl = url;
+      });
+    });
+  };
+
+  $scope.$watchCollection('messages', addNewSenderAvatarUrls);
   $scope.messages = Resource.messages($scope.roomKey);
 
   $scope.deleteable = function(senderKey) {

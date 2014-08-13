@@ -49,44 +49,20 @@ factories.Authentication = function($rootScope, $cookieStore, $firebaseSimpleLog
   };
 };
 
-factories.User = function(Resource) {
+factories.GithubAvatar = function(Resource) {
   return function(args) {
-    var key = args.key;
-    return {
-      // key methods: User({ key: x }).avatarUrl(y)
-      avatarUrl: function(callback) {
-        var path = 'users/' + key + '/thirdPartyUserData/avatar_url';
-        Resource.ref(path).on('value', callback);
-      }
-      // value methods
-    };
-  };
-};
+    var userKey = args.userKey;
+    var size = args.size || 24;
+    var path = 'users/' + userKey + '/thirdPartyUserData/avatar_url';
 
-factories.Message = function(User) {
-  return function(args) {
-    var message = args.message;
     return {
-      // key methods
-      // value methods: Message({ message: x }).senderAvatarUrl(y)
-      senderAvatarUrl: function(callback) {
-        User({ key: message.senderKey }).avatarUrl(callback);
-      }
-    };
-  };
-};
-
-factories.Messages = function(Message) {
-  return {
-    addNewSenderAvatarUrls: function(newMessages) {
-      if(!newMessages) return;
-      _.each(newMessages.$getIndex(), function(messageKey) {
-        var message = newMessages[messageKey];
-        if(message.senderAvatarUrl) return;
-        Message({ message: message }).senderAvatarUrl(function(snapshot) {
-          message.senderAvatarUrl = (snapshot.val() || 'img/missing_avatar.png?v=1') + '&s=24';
+      url: function(callback) {
+        Resource.ref(path).on('value', function(snapshot) {
+          var result = snapshot.val() || 'img/missing_avatar.png?v=1'
+          result += '&s=' + size;
+          callback(result);
         });
-      });
-    },
+      }
+    };
   };
-};
+}
