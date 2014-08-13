@@ -4,7 +4,8 @@ var controllers = {};
 controllers.AuthenticationCtrl = function($scope, Authentication, User) {
   $scope.$watch('currentUserKey', function(key) {
     User({ key: key }).avatarUrl(function(snapshot) {
-      $scope.avatarUrl = snapshot.val();
+      var url = snapshot.val();
+      if(url) $scope.avatarUrl = url + '&s=14';
     });
   });
 

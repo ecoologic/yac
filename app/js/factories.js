@@ -84,7 +84,7 @@ factories.Messages = function(Message) {
         var message = newMessages[messageKey];
         if(message.senderAvatarUrl) return;
         Message({ message: message }).senderAvatarUrl(function(snapshot) {
-          message.senderAvatarUrl = snapshot.val() || 'img/missing_avatar.png?v=1';
+          message.senderAvatarUrl = (snapshot.val() || 'img/missing_avatar.png?v=1') + '&s=24';
         });
       });
     },
