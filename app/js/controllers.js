@@ -12,16 +12,20 @@ controllers.AuthenticationCtrl = function($scope, Authentication, User) {
   $scope.logout = Authentication.logout;
 };
 
-controllers.RoomsCtrl = function($scope, Rooms, CurrentRoom) {
+controllers.RoomsCtrl = function($scope, Resource, CurrentRoom) {
+  var sort = function (response) {
+    $scope.roomKeys = response.$getIndex().sort();
+  };
+
   $scope.currentRoom = CurrentRoom;
-  Rooms.orderedKeys(function(roomKeys) {
-    $scope.roomKeys = roomKeys;
-  })
+
+  $scope.rooms = Resource.rooms;
+  $scope.$watchCollection('rooms', sort);
 };
 
 controllers.MessagesCtrl = function($scope, Resource, Messages) {
   $scope.$watchCollection('messages', Messages.addNewSenderAvatarUrls);
-  $scope.messages = Resource.messages($scope.roomKey); // TODO? access $scope.room from ng-repeat?
+  $scope.messages = Resource.messages($scope.roomKey);
 
   $scope.deleteable = function(senderKey) {
     return senderKey === $scope.currentUserKey;

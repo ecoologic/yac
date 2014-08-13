@@ -63,16 +63,6 @@ factories.User = function(Resource) {
   };
 };
 
-factories.Rooms = function(Resource) {
-  return {
-    orderedKeys: function (callback) {
-      Resource.rooms.$on('loaded', function(response) {
-        return callback(_.keys(response).sort());
-      });
-    }
-  };
-};
-
 factories.Message = function(User) {
   return function(args) {
     var message = args.message;
