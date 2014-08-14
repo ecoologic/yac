@@ -16,7 +16,7 @@ controllers.AuthenticationCtrl = function($scope, Authentication, GithubAvatar) 
 
 controllers.RoomsCtrl = function($scope, Resource, CurrentRoom) {
   var sort = function (response) {
-    $scope.roomKeys = response.$getIndex().sort();
+    $scope.roomKeys = response.$getIndex().sort(); // TODO: Smarter sort
   };
 
   $scope.currentRoom = CurrentRoom;
@@ -25,9 +25,9 @@ controllers.RoomsCtrl = function($scope, Resource, CurrentRoom) {
   $scope.$watchCollection('rooms', sort);
 };
 
-controllers.MessagesCtrl = function($scope, Resource, H, GithubAvatar) {
+controllers.MessagesCtrl = function($scope, Resource, AFH, GithubAvatar) {
   var addNewSenderAvatarUrls = function(newMessages) {
-    H({ items: newMessages }).forEveryNewCollectionItem(function(message) {
+    AFH({ items: newMessages }).forEveryNewCollectionItem(function(message) {
       GithubAvatar({ userKey: message.senderKey }).url(function(url) {
         message.senderAvatarUrl = url;
       });
@@ -46,7 +46,7 @@ controllers.MessagesCtrl = function($scope, Resource, H, GithubAvatar) {
   };
 };
 
-controllers.NewMessageCtrl = function($scope, Authentication, Resource, CurrentRoom) {
+controllers.NewMessageCtrl = function($scope, CurrentRoom, Message) {
   // eg text: `/newroom let's move the conversation here`
   var setCurrentRoom = function() {
     $scope.newMessage.text = $scope.newMessage.text.replace(/^\/(\w+)\W?/, function(match, $1) {
@@ -55,17 +55,9 @@ controllers.NewMessageCtrl = function($scope, Authentication, Resource, CurrentR
     });
   };
 
-  var create = function() {
-    if(!$scope.newMessage.text.trim()) return;
-    $scope.newMessage.senderKey = $scope.currentUserKey;
-    $scope.newMessage.createdAt = new Date().toLocaleString();
-    Resource.room(CurrentRoom.key).$set({ lastMessageAt: $scope.newMessage.createdAt });
-    Resource.messages(CurrentRoom.key).$add($scope.newMessage);
-    $scope.newMessage = {};
-  };
-
   $scope.parse = function() {
     setCurrentRoom();
-    create();
+    Message({ message: $scope.newMessage }).create();
+    $scope.newMessage = {};
   };
 };

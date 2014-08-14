@@ -67,7 +67,7 @@ factories.GithubAvatar = function(Resource) {
   };
 }
 
-factories.H = function(Resource) { // H -> Helpers
+factories.AFH = function(Resource) { // -> "Angular-Fire" Helpers
   return function(args) {
     var items = args.items;
 
@@ -81,3 +81,18 @@ factories.H = function(Resource) { // H -> Helpers
     };
   };
 }
+
+factories.Message = function(Resource, Authentication, CurrentRoom) {
+  return function(args) {
+    var message = args.message;
+    return {
+      create: function() {
+        if(!message.text.trim()) return;
+        message.senderKey = Authentication.currentUserKey; // FIXME
+        message.createdAt = new Date().toLocaleString();
+        Resource.messages(CurrentRoom.key).$add(message);
+        Resource.room(CurrentRoom.key).$set({ lastMessageAt: $scope.newMessage.createdAt });
+      }
+    }
+  };
+};
