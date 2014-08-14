@@ -23,6 +23,14 @@ factories.CurrentRoom = function () {
   return { key: 'hall' };
 };
 
+factories.CurrentUser = function ($rootScope) {  // FIXME
+  return {
+    key:   $rootScope.currentUserKey,
+    value: $rootScope.currentUser
+  };
+};
+
+
 factories.Authentication = function($rootScope, $cookieStore, $firebaseSimpleLogin, Resource) {
   var setCurrentUser = function(key, user) {
     $cookieStore.put('session', { currentUserKey: key });
@@ -82,16 +90,16 @@ factories.AFH = function(Resource) { // -> "Angular-Fire" Helpers
   };
 }
 
-factories.Message = function(Resource, Authentication, CurrentRoom) {
+factories.Message = function(Resource, CurrentUser, CurrentRoom) {
   return function(args) {
     var message = args.message;
     return {
       create: function() {
         if(!message.text.trim()) return;
-        message.senderKey = Authentication.currentUserKey; // FIXME
+        message.senderKey = CurrentUser.key;
         message.createdAt = new Date().toLocaleString();
         Resource.messages(CurrentRoom.key).$add(message);
-        Resource.room(CurrentRoom.key).$set({ lastMessageAt: $scope.newMessage.createdAt });
+        Resource.room(CurrentRoom.key).$set({ lastMessageAt: message.createdAt });
       }
     }
   };
