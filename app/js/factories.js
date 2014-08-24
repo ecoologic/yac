@@ -19,17 +19,16 @@ factories.Resource = function($firebase) {
   };
 };
 
-factories.CurrentRoom = function () {
-  return { key: 'hall' };
-};
-
-factories.CurrentUser = function ($rootScope) {  // FIXME
+factories.CurrentUser = function ($rootScope) {  // TODO: remove $rootscope
   return {
     key:   $rootScope.currentUserKey,
     value: $rootScope.currentUser
   };
 };
 
+factories.CurrentRoom = function () {
+  return { key: 'hall' };
+};
 
 factories.Authentication = function($rootScope, $cookieStore, $firebaseSimpleLogin, Resource) {
   var setCurrentUser = function(key, user) {
@@ -99,8 +98,28 @@ factories.Message = function(Resource, CurrentUser, CurrentRoom) {
         message.senderKey = CurrentUser.key;
         message.createdAt = new Date().toLocaleString();
         Resource.messages(CurrentRoom.key).$add(message);
-        Resource.room(CurrentRoom.key).$set({ lastMessageAt: message.createdAt });
       }
     }
+  };
+};
+
+factories.NewMessageParser = function (Message, CurrentRoom, Resource) {
+  // eg text: `/newroom let's move the conversation here`
+  var setCurrentRoom = function(message) {
+    message.text = message.text.replace(/^\/(\w+)\W?/, function(match, $1) {
+      CurrentRoom.key = $1;
+      return '';
+    });
+  };
+
+  return {
+    call: function(message) {
+      setCurrentRoom(message);
+      Message({ message: message }).create();
+      Resource.room(CurrentRoom.key).$set({
+        lastMessageAt: message.createdAt,
+        $priority:     new Date()
+      });
+    },
   };
 };

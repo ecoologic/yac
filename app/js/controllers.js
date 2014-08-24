@@ -16,13 +16,13 @@ controllers.AuthenticationCtrl = function($scope, Authentication, GithubAvatar) 
 
 controllers.RoomsCtrl = function($scope, Resource, CurrentRoom) {
   var sort = function (response) {
-    $scope.roomKeys = response.$getIndex().sort(); // TODO: Smarter sort
+    $scope.roomKeys = response.$getIndex(); //.sort(); // TODO: Smarter sort
   };
 
   $scope.currentRoom = CurrentRoom;
 
   $scope.rooms = Resource.rooms;
-  $scope.$watchCollection('rooms', sort);
+  $scope.$watchCollection('rooms', sort); // TODO: can it now be avoided?
 };
 
 controllers.MessagesCtrl = function($scope, Resource, AFH, GithubAvatar) {
@@ -46,18 +46,9 @@ controllers.MessagesCtrl = function($scope, Resource, AFH, GithubAvatar) {
   };
 };
 
-controllers.NewMessageCtrl = function($scope, CurrentRoom, Message) {
-  // eg text: `/newroom let's move the conversation here`
-  var setCurrentRoom = function() {
-    $scope.newMessage.text = $scope.newMessage.text.replace(/^\/(\w+)\W?/, function(match, $1) {
-      CurrentRoom.key = $1;
-      return '';
-    });
-  };
-
+controllers.NewMessageCtrl = function($scope, NewMessageParser) {
   $scope.parse = function() {
-    setCurrentRoom();
-    Message({ message: $scope.newMessage }).create();
+    NewMessageParser.call($scope.newMessage);
     $scope.newMessage = {};
   };
 };
