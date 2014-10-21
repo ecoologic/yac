@@ -11,6 +11,16 @@
 
   <link href='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css' rel='stylesheet'>
 
+
+
+
+
+  <script src='https://raw.githubusercontent.com/danialfarid/angular-file-upload/master/dist/angular-file-upload-html5-shim.js'                   type='text/javascript'></script>
+
+
+
+
+
   <script src='http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js'                   type='text/javascript'></script>
   <script src='http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js'              type='text/javascript'></script>
 
@@ -21,6 +31,8 @@
   <script src='http://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.js'                     type='text/javascript'></script>
   <script src='http://cdn.firebase.com/js/simple-login/1.6.0/firebase-simple-login.js'            type='text/javascript'></script>
 
+  <script src='https://raw.githubusercontent.com/danialfarid/angular-file-upload/master/dist/angular-file-upload.js'                   type='text/javascript'></script>
+
   <link href='css/app.css' rel='stylesheet'/>
 
   <script src='js/controllers.js' type='text/javascript'></script>
@@ -30,6 +42,33 @@
   <script src='js/app.js'         type='text/javascript'></script>
 </head>
 <body ng-app='app' class='container'>
+
+
+<div ng-controller="MyCtrl">
+  <input type="text" ng-model="myModelObj">
+  <input type="file" ng-file-select="onFileSelect($files)">
+  <input type="file" ng-file-select="onFileSelect($files)" multiple accept="image/*">
+  <div class="button" ng-file-select="onFileSelect($files)" data-multiple="true"></div>
+  <div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class-name-or-function"
+        ng-show="dropSupported">drop files here</div>
+  <div ng-file-drop-available="dropSupported=true" 
+        ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+  <button ng-click="upload.abort()">Cancel Upload</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <section ng-controller='AuthenticationCtrl' class='authentication'>
     <button ng-show='currentUser' ng-click='logout()' class='btn btn-primary btn-xs'
             title="Log Out">

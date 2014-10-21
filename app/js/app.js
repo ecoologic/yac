@@ -8,7 +8,8 @@ var dependencies = [ //////////////////////////////////////////////////////////
   'firebase',        // https://www.firebase.com/docs/angular/reference.html
                      // https://www.firebase.com/docs/queries.html
                      // https://www.firebase.com/docs/data-structure.html
-  'ngCookies'
+  'ngCookies',
+  'angularFileUpload'
 ];
 
 var app = angular.module('app', dependencies) /////////////////////////////////
